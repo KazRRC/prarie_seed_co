@@ -16,6 +16,10 @@ has_one_attached :image
               only_integer: true,
               greater_than_or_equal_to: 0
             }
-
+validates :sale_price,
+          numericality: {
+            greater_than: 0
+          },
+          allow_nil: true
   validates :image_url, presence: true
 end
