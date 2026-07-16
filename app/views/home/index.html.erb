@@ -1,19 +1,45 @@
 <div class="container py-5">
 
-  <div class="row align-items-center">
+  <div class="text-center mb-5">
+    <h1>Prairie Seed Co.</h1>
 
-    <div class="col-lg-6">
-      <h1>Welcome to Prairie Seed Co.</h1>
-      <p>Your trusted source for quality seeds grown for the Manitoba climate.</p>
+    <p class="lead">
+      Quality vegetable, fruit and flower seeds for Manitoba gardeners.
+    </p>
 
-      <%= link_to "Browse Products", products_path, class: "btn btn-success" %>
-    </div>
+    <%= link_to "Browse Products",
+        products_path,
+        class: "btn btn-success btn-lg" %>
+  </div>
 
-    <div class="col-lg-6 text-center">
-      <img src="https://picsum.photos/600/400"
-           class="img-fluid rounded"
-           alt="Garden">
-    </div>
+  <h2 class="mb-4">Featured Products</h2>
+
+  <div class="row">
+
+    <% @products.each do |product| %>
+
+      <div class="col-md-4 mb-4">
+
+        <div class="card h-100">
+
+          <img src="<%= product.image_url %>"
+               class="card-img-top">
+
+          <div class="card-body">
+
+            <h5><%= product.name %></h5>
+
+            <p><%= product.description %></p>
+
+            <h4>$<%= product.price %></h4>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    <% end %>
 
   </div>
 

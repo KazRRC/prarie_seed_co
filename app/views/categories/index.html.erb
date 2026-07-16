@@ -1,17 +1,29 @@
-<div class="container">
+<div class="container py-5">
 
-  <div class="row">
+<h1>Categories</h1>
 
-    <% @categories.each do |category| %>
+<div class="row">
 
-      <div class="col-md-6 col-lg-4 mb-4">
+<% @categories.each do |category| %>
 
-        <!-- Category Card -->
+<div class="col-md-4 mb-4">
 
-      </div>
+<div class="card">
 
-    <% end %>
+<div class="card-body">
 
-  </div>
+<h4><%= link_to category.name, category %></h4>
+
+<p><%= category.description %></p>
+
+</div>
+
+</div>
+
+</div>
+
+<% end %>
+
+</div>
 
 </div>

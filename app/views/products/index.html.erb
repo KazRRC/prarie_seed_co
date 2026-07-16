@@ -1,17 +1,34 @@
-<div class="container">
+<div class="container py-5">
 
-  <div class="row">
+<h1>Products</h1>
 
-    <% @products.each do |product| %>
+<div class="row">
 
-      <div class="col-md-6 col-lg-4 mb-4">
+<% @products.each do |product| %>
 
-        <!-- Product Card -->
+<div class="col-md-4 mb-4">
 
-      </div>
+<div class="card h-100">
 
-    <% end %>
+<img src="<%= product.image_url %>" class="card-img-top">
 
-  </div>
+<div class="card-body">
+
+<h5>
+<%= link_to product.name,
+category_product_path(product.category, product) %>
+</h5>
+
+<p>$<%= product.price %></p>
+
+</div>
+
+</div>
+
+</div>
+
+<% end %>
+
+</div>
 
 </div>

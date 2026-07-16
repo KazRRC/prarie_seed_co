@@ -1,9 +1,78 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+Category.destroy_all
+Product.destroy_all
+
+vegetables = Category.create!(
+  name: "Vegetable Seeds",
+  description: "Seeds for growing fresh vegetables."
+)
+
+fruits = Category.create!(
+  name: "Fruit Seeds",
+  description: "Seeds for growing delicious fruits."
+)
+
+flowers = Category.create!(
+  name: "Flower Seeds",
+  description: "Seeds for beautiful flowers."
+)
+
+Product.create!([
+  {
+    name: "Roma Tomato",
+    description: "Excellent tomato for sauces.",
+    price: 3.99,
+    stock_quantity: 50,
+    image_url: "https://picsum.photos/400?1",
+    category: vegetables
+  },
+  {
+    name: "Carrot Nantes",
+    description: "Sweet orange carrots.",
+    price: 2.99,
+    stock_quantity: 80,
+    image_url: "https://picsum.photos/400?2",
+    category: vegetables
+  },
+  {
+    name: "Cucumber Marketmore",
+    description: "Perfect slicing cucumber.",
+    price: 3.49,
+    stock_quantity: 60,
+    image_url: "https://picsum.photos/400?3",
+    category: vegetables
+  },
+  {
+    name: "Strawberry",
+    description: "Juicy garden strawberries.",
+    price: 4.99,
+    stock_quantity: 40,
+    image_url: "https://picsum.photos/400?4",
+    category: fruits
+  },
+  {
+    name: "Blueberry",
+    description: "Hardy blueberry variety.",
+    price: 4.49,
+    stock_quantity: 30,
+    image_url: "https://picsum.photos/400?5",
+    category: fruits
+  },
+  {
+    name: "Sunflower",
+    description: "Large bright flowers.",
+    price: 2.99,
+    stock_quantity: 100,
+    image_url: "https://picsum.photos/400?6",
+    category: flowers
+  },
+  {
+    name: "Marigold",
+    description: "Colourful garden flowers.",
+    price: 2.49,
+    stock_quantity: 120,
+    image_url: "https://picsum.photos/400?7",
+    category: flowers
+  }
+])
+
+puts "Seeded database successfully!"
