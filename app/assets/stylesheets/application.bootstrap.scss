@@ -1,2 +1,23 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+@import "variables";
+@import "navigation";
+@import "buttons";
+@import "cards";
+@import "products";
+@import "footer";
+@import "home";
+
+$primary: #4f7d2a;
+$secondary: #8fbf63;
+$light: #f9f9f9;
+
+.navbar {
+    .nav-link {
+        color: white;
+
+        &:hover {
+            color: $secondary;
+        }
+    }
+}
