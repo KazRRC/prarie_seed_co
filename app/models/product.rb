@@ -22,4 +22,10 @@ validates :sale_price,
           },
           allow_nil: true
   validates :image_url, presence: true
+  scope :new_products,
+      -> {
+        where(created_at: 3.days.ago..Time.current)
+      }
+      scope :on_sale,
+      -> { where(on_sale: true) }
 end

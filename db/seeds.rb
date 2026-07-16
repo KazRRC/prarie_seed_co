@@ -24,6 +24,8 @@ Product.create!([
     stock_quantity: 50,
     image_url: "https://picsum.photos/400?1",
     category: vegetables
+      on_sale: true,
+  sale_price: 2.99
   },
   {
     name: "Carrot Nantes",

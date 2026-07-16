@@ -24,7 +24,20 @@
       destroy_customer_session_path,
       method: :delete,
       class: "btn btn-outline-light ms-2" %>
+<%= form_with url: products_path,
+              method: :get,
+              local: true,
+              class: "d-flex mb-4" do |f| %>
 
+  <%= f.text_field :search,
+        value: params[:search],
+        class: "form-control me-2",
+        placeholder: "Search products or categories..." %>
+
+  <%= f.submit "Search",
+        class: "btn btn-success" %>
+
+<% end %>
 <% else %>
 
   <%= link_to "Register",
