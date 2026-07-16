@@ -11,7 +11,6 @@ def index
                            "%#{params[:search]}%"
                          )
   end
-
   @products = @products.order(:name)
                        .page(params[:page])
                        .per(9)
