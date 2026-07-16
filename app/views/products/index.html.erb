@@ -20,7 +20,9 @@ category_product_path(product.category, product) %>
 </h5>
 
 <p>$<%= product.price %></p>
-
+<div class="d-flex justify-content-center mt-4">
+  <%= paginate @products %>
+</div>
 </div>
 
 </div>

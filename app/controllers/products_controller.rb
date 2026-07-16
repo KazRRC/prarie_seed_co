@@ -7,5 +7,7 @@ class ProductsController < ApplicationController
   def show
     @product = Product.find(params[:id])
   end
-
+def index
+  @products = Product.order(:name).page(params[:page]).per(9)
+end
 end
