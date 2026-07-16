@@ -16,7 +16,7 @@ def index
                        .page(params[:page])
                        .per(9)
 end
-def new
+def recent
   @products = Product.new_products
                      .page(params[:page])
                      .per(9)
