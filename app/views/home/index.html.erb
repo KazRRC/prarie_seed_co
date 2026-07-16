@@ -1,2 +1,20 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<div class="container py-5">
+
+  <div class="row align-items-center">
+
+    <div class="col-lg-6">
+      <h1>Welcome to Prairie Seed Co.</h1>
+      <p>Your trusted source for quality seeds grown for the Manitoba climate.</p>
+
+      <%= link_to "Browse Products", products_path, class: "btn btn-success" %>
+    </div>
+
+    <div class="col-lg-6 text-center">
+      <img src="https://picsum.photos/600/400"
+           class="img-fluid rounded"
+           alt="Garden">
+    </div>
+
+  </div>
+
+</div>

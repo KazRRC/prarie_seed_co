@@ -21,3 +21,17 @@ $light: #f9f9f9;
         }
     }
 }
+
+%card-shadow {
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+
+.product-card {
+    @extend %card-shadow;
+}
+
+$spacing: 20px;
+
+.product-card {
+    margin: $spacing / 2;
+}
