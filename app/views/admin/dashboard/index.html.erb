@@ -1,17 +1,51 @@
-<div class="container py-5">
+<div class="row">
 
-  <h1>Admin Dashboard</h1>
+<div class="col-md-4">
 
-  <div class="list-group mt-4">
+<div class="card">
 
-    <%= link_to "Manage Products",
-        admin_products_path,
-        class: "list-group-item list-group-item-action" %>
+<div class="card-body">
 
-    <%= link_to "Manage Categories",
-        admin_categories_path,
-        class: "list-group-item list-group-item-action" %>
+<h5>Products</h5>
 
-  </div>
+<h2><%= @product_count %></h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card">
+
+<div class="card-body">
+
+<h5>Categories</h5>
+
+<h2><%= @category_count %></h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card">
+
+<div class="card-body">
+
+<h5>Customers</h5>
+
+<h2><%= @customer_count %></h2>
+
+</div>
+
+</div>
+
+</div>
 
 </div>

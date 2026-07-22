@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Prairie Seed Co. Admin</title>
+
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+
+<div class="row">
+
+<div class="col-md-2 bg-dark min-vh-100 p-4">
+
+<h3 class="text-white">
+Admin
+</h3>
+
+<hr class="text-light">
+
+<div class="nav flex-column">
+
+<%= link_to "Dashboard",
+            admin_root_path,
+            class: "nav-link text-white" %>
+
+<%= link_to "Products",
+            admin_products_path,
+            class: "nav-link text-white" %>
+
+<%= link_to "Categories",
+            admin_categories_path,
+            class: "nav-link text-white" %>
+
+<%= link_to "Back to Store",
+            root_path,
+            class: "nav-link text-warning" %>
+
+</div>
+
+</div>
+
+<div class="col-md-10 p-5">
+
+<%= yield %>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

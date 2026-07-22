@@ -16,8 +16,9 @@ end
   collection do
     get :sale
     get :recent
-  end
+    get :new_products
 end
 
   resources :products, only: [:index]
+end
 end

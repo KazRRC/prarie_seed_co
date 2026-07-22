@@ -1,47 +1,131 @@
 <div class="container py-5">
 
-<h1>Products</h1>
+  <h1>Products</h1>
 
-<div class="row">
+  <%= form_with url: products_path, method: :get, local: true, class: "mb-4" do |form| %>
 
-<% @products.each do |product| %>
+    <div class="input-group">
 
-<div class="col-md-4 mb-4">
+      <%= form.text_field :search,
+                          value: params[:search],
+                          placeholder: "Search products...",
+                          class: "form-control" %>
 
-<div class="card h-100">
+      <%= form.submit "Search",
+                      class: "btn btn-primary" %>
 
-<% if product.image.attached? %>
+    </div>
 
-  <%= image_tag product.image,
-                class: "card-img-top",
-                style: "height:250px; object-fit:cover;" %>
+  <% end %>
 
-<% else %>
 
-  <%= image_tag "placeholder.png",
-                class: "card-img-top" %>
+  <% if @products.any? %>
 
-<% end %>
+    <table class="table table-striped">
 
-<div class="card-body">
+      <thead>
 
-<h5>
-<%= link_to product.name,
-category_product_path(product.category, product) %>
-</h5>
+        <tr>
+          <th>Name</th>
+          <th>Image</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Stock</th>
+        </tr>
 
-<p>$<%= product.price %></p>
-<div class="d-flex justify-content-center mt-4">
-  <%= paginate @products %>
-</div>
-</div>
+      </thead>
 
-</div>
 
-</div>
+      <tbody>
 
-<% end %>
+        <% @products.each do |product| %>
 
-</div>
+          <tr>
+
+            <td>
+              <%= product.name %>
+            </td>
+
+
+            <td>
+
+              <% if product.image.attached? %>
+
+                <%= image_tag product.image,
+                              width: 75,
+                              class: "rounded" %>
+
+              <% else %>
+
+                No Image
+
+              <% end %>
+
+            </td>
+
+
+            <td>
+              <%= product.category.name %>
+            </td>
+
+
+            <td>
+              $<%= product.price %>
+            </td>
+
+
+            <td>
+              <%= product.stock_quantity %>
+            </td>
+
+
+          </tr>
+
+        <% end %>
+
+      </tbody>
+
+    </table>
+<h3 class="mt-4">Planting Information</h3>
+
+<table class="table table-bordered">
+
+<tr>
+  <th>Planting Depth</th>
+  <td><%= @product.planting_depth %></td>
+</tr>
+
+<tr>
+  <th>Row Spacing</th>
+  <td><%= @product.row_spacing %></td>
+</tr>
+
+<tr>
+  <th>Plant Spacing</th>
+  <td><%= @product.plant_spacing %></td>
+</tr>
+
+<tr>
+  <th>Sun Requirements</th>
+  <td><%= @product.sun_requirements %></td>
+</tr>
+
+<tr>
+  <th>Days to Germination</th>
+  <td><%= @product.days_to_germination %></td>
+</tr>
+
+</table>
+
+    <%= paginate @products %>
+
+
+  <% else %>
+
+    <div class="alert alert-warning">
+      No products found.
+    </div>
+
+  <% end %>
 
 </div>

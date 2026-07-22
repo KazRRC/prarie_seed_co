@@ -86,7 +86,42 @@
                                class: "form-select" %>
 
   </div>
+<div class="mb-3">
+  <%= form.label :planting_depth %>
+  <%= form.text_field :planting_depth, class: "form-control" %>
+</div>
 
+<div class="mb-3">
+  <%= form.label :row_spacing %>
+  <%= form.text_field :row_spacing, class: "form-control" %>
+</div>
+
+<div class="mb-3">
+  <%= form.label :plant_spacing %>
+  <%= form.text_field :plant_spacing, class: "form-control" %>
+</div>
+
+<div class="mb-3">
+  <%= form.label :sun_requirements %>
+  <%= form.select :sun_requirements,
+                  ["Full Sun", "Partial Sun", "Shade"],
+                  {},
+                  class: "form-select" %>
+</div>
+
+<div class="mb-3">
+  <%= form.label :days_to_germination %>
+  <%= form.text_field :days_to_germination,
+                      class: "form-control" %>
+</div>
+
+<div class="form-check mb-3">
+  <%= form.check_box :featured,
+                     class: "form-check-input" %>
+
+  <%= form.label :featured,
+                 class: "form-check-label" %>
+</div>
   <div class="form-check mb-3">
 
     <%= form.check_box :on_sale,
