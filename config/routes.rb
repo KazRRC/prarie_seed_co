@@ -1,9 +1,12 @@
 
 
 Rails.application.routes.draw do
-  namespace :admin do
-    get "dashboard/index"
-  end
+namespace :admin do
+  root "dashboard#index"
+
+  resources :products
+  resources :categories
+end
   devise_for :customers
   root "home#index"
   resources :categories, only: [:index, :show] do

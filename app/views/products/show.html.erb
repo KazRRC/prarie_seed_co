@@ -4,8 +4,18 @@
 
 <div class="col-md-6">
 
-<img src="<%= @product.image_url %>"
-     class="img-fluid rounded">
+<% if product.image.attached? %>
+
+  <%= image_tag product.image,
+                class: "card-img-top",
+                style: "height:250px; object-fit:cover;" %>
+
+<% else %>
+
+  <%= image_tag "placeholder.png",
+                class: "card-img-top" %>
+
+<% end %>
 
 </div>
 

@@ -24,5 +24,13 @@ class ApplicationController < ActionController::Base
       ]
     )
   end
+  private
+
+def require_admin
+  unless customer_signed_in? && current_customer.admin?
+    redirect_to root_path,
+                alert: "You are not authorized to access that page."
+  end
+end
 
 end
