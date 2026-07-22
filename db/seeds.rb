@@ -1,103 +1,70 @@
-require "httparty"
+require "csv"
 
-puts "Starting database seed..."
+puts "Clearing database..."
 
-# -------------------------
-# Create Categories
-# -------------------------
+Product.destroy_all
+Category.destroy_all
 
-category_names = [
-  "Vegetables",
-  "Flowers",
-  "Herbs",
-  "Grains"
-]
+puts "Creating categories..."
 
-category_names.each do |category_name|
-  Category.find_or_create_by!(name: category_name)
-end
-
-puts "Categories created."
-
-
-# -------------------------
-# Import Plants from Trefle API
-# -------------------------
-
-puts "Importing plants from Trefle API..."
-
-token = ENV["TREFLE_API_TOKEN"]
-
-if token.nil?
-  puts "ERROR: Missing TREFLE_API_TOKEN"
-  exit
-end
-
-
-imported_count = 0
-
-
-(1..5).each do |page|
-
-  response = HTTParty.get(
-    "https://trefle.io/api/v1/plants",
-    query: {
-      token: token,
-      page: page
-    }
-  )
-
-
-  unless response.success?
-    puts "API request failed on page #{page}"
-    next
-  end
-
-
-  plants = response.parsed_response["data"]
-
-
-  plants.each do |plant|
-
-    category = Category.find_by(
-      name: category_names[imported_count % category_names.length]
-    )
-
-
-    product_name =
-      plant["common_name"].presence ||
-      plant["scientific_name"].presence ||
-      "Unknown Plant"
-
-
-product = Product.new(
-  name: product_name,
-  description: "Seed product imported from Trefle API.",
-  price: rand(2.99..15.99).round(2),
-  stock_quantity: rand(10..100),
-  image_url: "https://placehold.co/600x400?text=#{product_name.parameterize}",
-  category: category
+vegetables = Category.create!(
+  name: "Vegetable Seeds",
+  description: "High-quality vegetable seeds suitable for Manitoba gardens."
 )
 
+fruits = Category.create!(
+  name: "Fruit Seeds",
+  description: "Fruit seeds for home gardens and small-scale growers."
+)
 
-    puts "Creating #{product.name}"
-    puts "Description: #{product.description.inspect}"
+flowers = Category.create!(
+  name: "Flower Seeds",
+  description: "Beautiful flower seeds for colourful gardens."
+)
 
+csv_path = Rails.root.join("db", "data", "vegetables.csv")
 
-    product.save!
+unless File.exist?(csv_path)
+  abort "ERROR: Could not find #{csv_path}"
+end
 
+puts "Importing vegetables..."
 
-    imported_count += 1
+CSV.foreach(csv_path, headers: true) do |row|
 
-  end
+  Product.create!(
+    name: row["VARIETY"]&.strip,
+    description: <<~DESC,
+      Planting Time: #{row["WHEN TO\nPLANT"]}
 
+      Seeds or Plants per 100 ft Row:
+      #{row["SEEDS OR PLANTS FOR\n100 FT. ROW"]}
 
-  puts "Finished importing page #{page}"
+      Row Spacing:
+      #{row["ROWS APART"]}
+
+      Plant Spacing:
+      #{row["APART IN ROW"]}
+
+      Planting Depth:
+      #{row["DEPTE TO PLANT"]}
+    DESC
+
+    price: rand(2.99..8.99).round(2),
+
+    stock_quantity: rand(15..100),
+
+    image_url: "default-vegetable.jpg",
+
+    category: vegetables,
+
+    on_sale: [true, false].sample,
+
+    sale_price: rand(1.99..6.99).round(2)
+  )
 
 end
 
+puts "#{Product.count} products imported."
 
-puts "-------------------------"
-puts "Seed complete!"
-puts "Products: #{Product.count}"
-puts "Categories: #{Category.count}"
+puts "Done!"
