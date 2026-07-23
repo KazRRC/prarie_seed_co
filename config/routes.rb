@@ -17,8 +17,6 @@ end
     get :recent
     get :new_products
 end
-
-  resources :products, only: [:index]
 end
 resource :cart, only: [:show] do
   post "add/:product_id", to: "carts#add", as: :add
