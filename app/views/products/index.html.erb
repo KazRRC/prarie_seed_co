@@ -1,131 +1,151 @@
 <div class="container py-5">
 
-  <h1>Products</h1>
+  <div class="row mb-5">
 
-  <%= form_with url: products_path, method: :get, local: true, class: "mb-4" do |form| %>
+    <div class="col-lg-8">
+      <h1 class="display-5 fw-bold">
+        Our Products
+      </h1>
 
-    <div class="input-group">
+      <p class="lead text-muted">
+        Browse our collection of high-quality vegetable, flower, fruit, and gardening products.
+      </p>
+    </div>
 
-      <%= form.text_field :search,
-                          value: params[:search],
-                          placeholder: "Search products...",
-                          class: "form-control" %>
+    <div class="col-lg-4">
 
-      <%= form.submit "Search",
-                      class: "btn btn-primary" %>
+      <%= form_with url: products_path,
+                    method: :get,
+                    local: true do |form| %>
+
+        <div class="input-group">
+
+          <%= form.text_field :search,
+                              value: params[:search],
+                              placeholder: "Search products or categories...",
+                              class: "form-control" %>
+
+          <%= form.submit "Search",
+                          class: "btn btn-success" %>
+
+        </div>
+
+      <% end %>
 
     </div>
 
-  <% end %>
+  </div>
 
+  <div class="row">
 
-  <% if @products.any? %>
+    <% @products.each do |product| %>
 
-    <table class="table table-striped">
+      <div class="col-sm-6 col-lg-4 mb-4">
 
-      <thead>
+        <div class="card shadow-sm h-100">
 
-        <tr>
-          <th>Name</th>
-          <th>Image</th>
-          <th>Category</th>
-          <th>Price</th>
-          <th>Stock</th>
-        </tr>
+          <% if product.image.attached? %>
 
-      </thead>
+            <%= image_tag product.image,
+                          class: "card-img-top",
+                          style: "height:250px; object-fit:cover;" %>
 
+          <% else %>
 
-      <tbody>
+            <%= image_tag "placeholder.png",
+                          class: "card-img-top",
+                          style: "height:250px; object-fit:cover;" %>
 
-        <% @products.each do |product| %>
+          <% end %>
 
-          <tr>
+          <div class="card-body d-flex flex-column">
 
-            <td>
-              <%= product.name %>
-            </td>
+            <h5 class="card-title">
 
+              <%= link_to product.name,
+                          product_path(product),
+                          class: "text-decoration-none text-dark" %>
 
-            <td>
+            </h5>
 
-              <% if product.image.attached? %>
+            <p class="text-muted mb-2">
 
-                <%= image_tag product.image,
-                              width: 75,
-                              class: "rounded" %>
+              <%= product.category.name %>
+
+            </p>
+
+            <p class="card-text">
+
+              <%= truncate(product.description, length: 100) %>
+
+            </p>
+
+            <div class="mt-auto">
+
+              <% if product.on_sale? && product.sale_price.present? %>
+
+                <p class="mb-1">
+
+                  <span class="text-decoration-line-through text-muted">
+
+                    $<%= sprintf("%.2f", product.price) %>
+
+                  </span>
+
+                  <span class="badge bg-danger ms-2">
+
+                    Sale
+
+                  </span>
+
+                </p>
+
+                <h4 class="text-danger">
+
+                  $<%= sprintf("%.2f", product.sale_price) %>
+
+                </h4>
 
               <% else %>
 
-                No Image
+                <h4 class="text-success">
+
+                  $<%= sprintf("%.2f", product.price) %>
+
+                </h4>
 
               <% end %>
 
-            </td>
+              <% if product.featured? %>
 
+                <span class="badge bg-warning text-dark">
 
-            <td>
-              <%= product.category.name %>
-            </td>
+                  Featured
 
+                </span>
 
-            <td>
-              $<%= product.price %>
-            </td>
+              <% end %>
 
+              <%= link_to "View Details",
+                          product_path(product),
+                          class: "btn btn-success w-100 mt-3" %>
 
-            <td>
-              <%= product.stock_quantity %>
-            </td>
+            </div>
 
+          </div>
 
-          </tr>
+        </div>
 
-        <% end %>
+      </div>
 
-      </tbody>
+    <% end %>
 
-    </table>
-<h3 class="mt-4">Planting Information</h3>
+  </div>
 
-<table class="table table-bordered">
-
-<tr>
-  <th>Planting Depth</th>
-  <td><%= @product.planting_depth %></td>
-</tr>
-
-<tr>
-  <th>Row Spacing</th>
-  <td><%= @product.row_spacing %></td>
-</tr>
-
-<tr>
-  <th>Plant Spacing</th>
-  <td><%= @product.plant_spacing %></td>
-</tr>
-
-<tr>
-  <th>Sun Requirements</th>
-  <td><%= @product.sun_requirements %></td>
-</tr>
-
-<tr>
-  <th>Days to Germination</th>
-  <td><%= @product.days_to_germination %></td>
-</tr>
-
-</table>
+  <div class="d-flex justify-content-center mt-5">
 
     <%= paginate @products %>
 
-
-  <% else %>
-
-    <div class="alert alert-warning">
-      No products found.
-    </div>
-
-  <% end %>
+  </div>
 
 </div>

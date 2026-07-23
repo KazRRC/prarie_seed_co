@@ -103,10 +103,12 @@
 
 <div class="mb-3">
   <%= form.label :sun_requirements %>
-  <%= form.select :sun_requirements,
-                  ["Full Sun", "Partial Sun", "Shade"],
-                  {},
-                  class: "form-select" %>
+<%= form.select :sun_requirements,
+                Product.sun_requirements.keys.map { |key|
+                  [key.titleize, key]
+                },
+                {},
+                class: "form-select" %>
 </div>
 
 <div class="mb-3">

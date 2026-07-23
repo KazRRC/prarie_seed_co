@@ -5,22 +5,27 @@ puts "Clearing database..."
 Product.destroy_all
 Category.destroy_all
 
-puts "Creating categories..."
+categories = {
+  vegetables: Category.create!(
+    name: "Vegetable Seeds",
+    description: "Vegetable seeds for home gardens."
+  ),
 
-vegetables = Category.create!(
-  name: "Vegetable Seeds",
-  description: "High-quality vegetable seeds suitable for Manitoba gardens."
-)
+  fruits: Category.create!(
+    name: "Fruit Seeds",
+    description: "Fruit seeds for Manitoba growers."
+  ),
 
-fruits = Category.create!(
-  name: "Fruit Seeds",
-  description: "Fruit seeds for home gardens and small-scale growers."
-)
+  flowers: Category.create!(
+    name: "Flower Seeds",
+    description: "Annual and perennial flower seeds."
+  ),
 
-flowers = Category.create!(
-  name: "Flower Seeds",
-  description: "Beautiful flower seeds for colourful gardens."
-)
+  kits: Category.create!(
+    name: "Gardening Kits",
+    description: "Starter kits and accessories."
+  )
+}
 
 csv_path = Rails.root.join("db", "data", "vegetables.csv")
 

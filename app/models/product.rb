@@ -26,7 +26,7 @@ validates :sale_price,
             greater_than: 0
           },
           allow_nil: true
-  validates :image_url, presence: true
+
   enum :sun_requirements,
 {
   full_sun: 0,
