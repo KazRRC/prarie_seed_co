@@ -1,6 +1,5 @@
-
-
 Rails.application.routes.draw do
+  get "carts/show"
 namespace :admin do
   root "dashboard#index"
 
@@ -20,5 +19,10 @@ end
 end
 
   resources :products, only: [:index]
+end
+resource :cart, only: [:show] do
+  post "add/:product_id", to: "carts#add", as: :add
+  patch "update/:product_id", to: "carts#update", as: :update
+  delete "remove/:product_id", to: "carts#remove", as: :remove
 end
 end
