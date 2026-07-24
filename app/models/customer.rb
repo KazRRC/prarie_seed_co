@@ -10,4 +10,19 @@ class Customer < ApplicationRecord
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :phone_number, presence: true, length: { minimum: 10 }
   has_many :orders, dependent: :destroy
+
+validates :street_address,
+          presence: true
+
+validates :city,
+          presence: true
+
+validates :province,
+          presence: true
+
+validates :postal_code,
+          presence: true
+
+validates :country,
+          presence: true
 end

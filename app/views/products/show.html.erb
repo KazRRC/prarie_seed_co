@@ -1,44 +1,105 @@
 <div class="container py-5">
 
-<div class="row">
+  <div class="row">
 
-<div class="col-md-6">
+    <div class="col-lg-6">
 
-<% if product.image.attached? %>
+      <% if @product.image.attached? %>
 
-  <%= image_tag product.image,
-                class: "card-img-top",
-                style: "height:250px; object-fit:cover;" %>
+        <%= image_tag @product.image,
+                      class: "img-fluid rounded shadow" %>
 
-<% else %>
+      <% else %>
 
-  <%= image_tag "placeholder.png",
-                class: "card-img-top" %>
+        <%= image_tag "placeholder.png",
+                      class: "img-fluid rounded shadow" %>
 
-<% end %>
+      <% end %>
 
-</div>
+    </div>
 
-<div class="col-md-6">
+    <div class="col-lg-6">
 
-<h1><%= @product.name %></h1>
 
-<p><%= @product.description %></p>
 
-<h3>$<%= @product.price %></h3>
+      <h1 class="display-5 fw-bold">
+        <%= @product.name %>
+      </h1>
 
-<p>
-Stock:
-<%= @product.stock_quantity %>
-</p>
+      <p class="lead">
+        <%= @product.description %>
+      </p>
 
-<p>
-Category:
-<%= @product.category.name %>
-</p>
+      <% if @product.on_sale? && @product.sale_price.present? %>
 
-</div>
+        <p class="mb-0 text-muted text-decoration-line-through">
+          $<%= sprintf("%.2f", @product.price) %>
+        </p>
 
-</div>
+        <h2 class="text-danger">
+          $<%= sprintf("%.2f", @product.sale_price) %>
+        </h2>
+
+        <span class="badge bg-danger">
+          On Sale
+        </span>
+
+      <% else %>
+
+        <h2 class="text-success">
+          $<%= sprintf("%.2f", @product.price) %>
+        </h2>
+
+      <% end %>
+
+      <hr>
+
+      <table class="table">
+
+        <tr>
+          <th>Category</th>
+          <td><%= @product.category.name %></td>
+        </tr>
+
+        <tr>
+          <th>Stock</th>
+          <td><%= @product.stock_quantity %></td>
+        </tr>
+
+        <tr>
+          <th>Planting Depth</th>
+          <td><%= @product.planting_depth %></td>
+        </tr>
+
+        <tr>
+          <th>Row Spacing</th>
+          <td><%= @product.row_spacing %></td>
+        </tr>
+
+        <tr>
+          <th>Plant Spacing</th>
+          <td><%= @product.plant_spacing %></td>
+        </tr>
+
+        <tr>
+          <th>Sun Requirements</th>
+          <td><%= @product.sun_requirements.to_s.titleize %></td>
+        </tr>
+
+        <tr>
+          <th>Days to Germination</th>
+          <td><%= @product.days_to_germination %></td>
+        </tr>
+
+      </table>
+
+      <%= button_to "Add to Cart",
+                    add_cart_path(@product),
+                    method: :post,
+                    class: "btn btn-success btn-lg mt-3" %>
+
+    </div>
+
+  </div>
 
 </div>

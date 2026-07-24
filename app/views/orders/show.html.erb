@@ -1,0 +1,75 @@
+<div class="container py-5">
+
+<h1>Order Confirmation</h1>
+
+<div class="alert alert-success">
+
+Thank you for your purchase!
+
+</div>
+
+<p>
+
+<strong>Order Number:</strong>
+
+<%= @order.id %>
+
+</p>
+
+<p>
+
+<strong>Status:</strong>
+
+<%= @order.status.titleize %>
+
+</p>
+
+<table class="table">
+
+<thead>
+
+<tr>
+
+<th>Product</th>
+
+<th>Quantity</th>
+
+<th>Price</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<% @order.order_items.each do |item| %>
+
+<tr>
+
+<td><%= item.product.name %></td>
+
+<td><%= item.quantity %></td>
+
+<td>$<%= sprintf("%.2f", item.price) %></td>
+
+</tr>
+
+<% end %>
+
+</tbody>
+
+</table>
+
+<div class="text-end">
+
+<h3>
+
+Total
+
+$<%= sprintf("%.2f", @order.total) %>
+
+</h3>
+
+</div>
+
+</div>

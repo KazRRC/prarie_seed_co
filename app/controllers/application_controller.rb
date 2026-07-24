@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-
   before_action :configure_permitted_parameters,
                 if: :devise_controller?
 
@@ -13,7 +12,12 @@ class ApplicationController < ActionController::Base
       keys: [
         :first_name,
         :last_name,
-        :phone_number
+        :phone_number,
+        :street_address,
+        :city,
+        :province,
+        :postal_code,
+        :country
       ]
     )
 
@@ -22,22 +26,26 @@ class ApplicationController < ActionController::Base
       keys: [
         :first_name,
         :last_name,
-        :phone_number
+        :phone_number,
+        :street_address,
+        :city,
+        :province,
+        :postal_code,
+        :country
       ]
     )
   end
+
   private
 
-def require_admin
-  unless customer_signed_in? && current_customer.admin?
-    redirect_to root_path,
-                alert: "You are not authorized to access that page."
+  def require_admin
+    unless customer_signed_in? && current_customer.admin?
+      redirect_to root_path,
+                  alert: "You are not authorized to access that page."
+    end
   end
 
-end
-private
-
-def initialize_cart
-  session[:cart] ||= {}
-end
+  def initialize_cart
+    session[:cart] ||= {}
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_23_214318) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_23_221133) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -48,15 +48,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_23_214318) do
 
   create_table "customers", force: :cascade do |t|
     t.boolean "admin", default: false, null: false
+    t.string "city"
+    t.string "country"
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "first_name"
     t.string "last_name"
     t.string "phone_number"
+    t.string "postal_code"
+    t.string "province"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
+    t.string "street_address"
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
@@ -74,9 +79,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_23_214318) do
   end
 
   create_table "orders", force: :cascade do |t|
+    t.string "city"
+    t.string "country"
     t.datetime "created_at", null: false
     t.integer "customer_id", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "phone_number"
+    t.string "postal_code"
+    t.string "province"
     t.string "status"
+    t.string "street_address"
     t.decimal "total"
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_orders_on_customer_id"

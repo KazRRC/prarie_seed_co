@@ -1,0 +1,86 @@
+<div class="container py-5">
+
+<div class="d-flex justify-content-between mb-4">
+
+<h1>Manage Categories</h1>
+
+<%= link_to "New Category",
+            new_admin_category_path,
+            class: "btn btn-success" %>
+
+</div>
+
+<table class="table table-striped align-middle">
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>Description</th>
+
+<th>Products</th>
+
+<th></th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<% @categories.each do |category| %>
+
+<tr>
+
+<td>
+
+<strong><%= category.name %></strong>
+
+</td>
+
+<td>
+
+<%= truncate(category.description,
+             length: 60) %>
+
+</td>
+
+<td>
+
+<span class="badge bg-primary">
+
+<%= category.products.count %>
+
+</span>
+
+</td>
+
+<td>
+
+<%= link_to "Edit",
+            edit_admin_category_path(category),
+            class: "btn btn-primary btn-sm" %>
+
+<%= button_to "Delete",
+              admin_category_path(category),
+              method: :delete,
+              class: "btn btn-danger btn-sm",
+              form: {
+                data: {
+                  turbo_confirm: "Delete this category?"
+                }
+              } %>
+
+</td>
+
+</tr>
+
+<% end %>
+
+</tbody>
+
+</table>
+
+</div>

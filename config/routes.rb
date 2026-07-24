@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get "orders/index"
+  get "orders/show"
+  get "orders/create"
   get "carts/show"
 namespace :admin do
   root "dashboard#index"
@@ -23,4 +26,6 @@ resource :cart, only: [:show] do
   patch "update/:product_id", to: "carts#update", as: :update
   delete "remove/:product_id", to: "carts#remove", as: :remove
 end
+resources :orders, only: [:index, :show, :create]
+resource :checkout, only: [:show, :create]
 end
