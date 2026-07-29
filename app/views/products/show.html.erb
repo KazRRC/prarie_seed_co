@@ -3,7 +3,11 @@
   <div class="row">
 
     <div class="col-lg-6">
-
+      <% if @product.on_sale? %>
+        <span class="badge bg-danger fs-6 mb-3">
+          🏷️ Limited Time Sale!
+        </span>
+      <% end %>
       <% if @product.image.attached? %>
 
         <%= image_tag @product.image,
@@ -30,27 +34,32 @@
         <%= @product.description %>
       </p>
 
-      <% if @product.on_sale? && @product.sale_price.present? %>
+        <% if @product.on_sale? && @product.sale_price.present? %>
 
-        <p class="mb-0 text-muted text-decoration-line-through">
-          $<%= sprintf("%.2f", @product.price) %>
-        </p>
+          <p class="mb-1">
+            <span class="text-muted text-decoration-line-through fs-4">
+              $<%= sprintf("%.2f", @product.price) %>
+            </span>
 
-        <h2 class="text-danger">
-          $<%= sprintf("%.2f", @product.sale_price) %>
-        </h2>
+          </p>
 
-        <span class="badge bg-danger">
-          On Sale
-        </span>
+          <h2 class="text-danger fw-bold">
 
-      <% else %>
+            $<%= sprintf("%.2f", @product.sale_price) %>
 
-        <h2 class="text-success">
-          $<%= sprintf("%.2f", @product.price) %>
-        </h2>
+            <span class="badge bg-danger ms-2">
+              <%= @product.discount_percentage %>% OFF
+            </span>
 
-      <% end %>
+          </h2>
+
+        <% else %>
+
+          <h2 class="text-success fw-bold">
+            $<%= sprintf("%.2f", @product.price) %>
+          </h2>
+
+        <% end %>
 
       <hr>
 

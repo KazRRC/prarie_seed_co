@@ -1,13 +1,6 @@
 class Product < ApplicationRecord
   belongs_to :category
-
   has_one_attached :image
-
-  enum :sun_requirements, {
-    full_sun: 0,
-    partial_sun: 1,
-    shade: 2
-  }
 
   validates :name, presence: true
   validates :description, presence: true
@@ -15,6 +8,10 @@ class Product < ApplicationRecord
   validates :price,
             presence: true,
             numericality: { greater_than: 0 }
+
+  validates :sale_price,
+            numericality: { greater_than: 0 },
+            allow_nil: true
 
   validates :stock_quantity,
             presence: true,
@@ -26,33 +23,20 @@ class Product < ApplicationRecord
   validates :planting_depth, presence: true
   validates :row_spacing, presence: true
   validates :plant_spacing, presence: true
-  validates :sun_requirements, presence: true
   validates :days_to_germination, presence: true
+  validates :sun_requirements, presence: true
 
-  validates :sale_price,
-            numericality: { greater_than: 0 },
-            allow_nil: true
+  has_one_attached :image
 
-scope :new_products,
-      -> {
-        where("created_at >= ?", 5.days.ago)
-          .order(created_at: :desc)
-      }
+  scope :new_products,
+        -> { where("created_at >= ?", 5.days.ago).order(created_at: :desc) }
 
-scope :on_sale,
-      -> {
-        where(on_sale: true)
-          .order(name: :asc)
-      }
+  scope :on_sale,
+        -> { where(on_sale: true).order(:name) }
 
-scope :recently_updated,
-      -> {
-        where(updated_at: 5.days.ago..)
-          .where("created_at < ?", 5.days.ago)
-      }
-end
-def discount_percentage
-  return 0 unless on_sale? && sale_price.present? && price.present?
+  def discount_percentage
+    return 0 unless on_sale? && sale_price.present? && price.present?
 
-  (((price - sale_price) / price) * 100).round
+    (((price - sale_price) / price) * 100).round
+  end
 end
