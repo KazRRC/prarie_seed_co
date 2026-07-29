@@ -33,18 +33,26 @@ class Product < ApplicationRecord
             numericality: { greater_than: 0 },
             allow_nil: true
 
-  scope :new_products,
-        -> { where("created_at >= ?", 3.days.ago) }
+scope :new_products,
+      -> {
+        where("created_at >= ?", 5.days.ago)
+          .order(created_at: :desc)
+      }
 
-  scope :recently_updated,
-        -> {
-          where(updated_at: 3.days.ago..)
-            .where("created_at < ?", 3.days.ago)
-        }
+scope :on_sale,
+      -> {
+        where(on_sale: true)
+          .order(name: :asc)
+      }
 
-  scope :on_sale,
-        -> { where(on_sale: true) }
+scope :recently_updated,
+      -> {
+        where(updated_at: 5.days.ago..)
+          .where("created_at < ?", 5.days.ago)
+      }
+end
+def discount_percentage
+  return 0 unless on_sale? && sale_price.present? && price.present?
 
-  scope :featured_products,
-        -> { where(featured: true) }
+  (((price - sale_price) / price) * 100).round
 end

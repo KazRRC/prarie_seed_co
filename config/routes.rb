@@ -12,7 +12,12 @@ end
   devise_for :customers
   root "home#index"
   resources :categories, only: [:index, :show] do
-    resources :products, only: [:show]
+    resources :products, only: [:index, :show] do
+  collection do
+    get :new_products
+    get :sale
+  end
+end
   end
   resources :products do
   collection do

@@ -15,6 +15,17 @@
         <li class="nav-item">
           <%= link_to "Categories", categories_path, class: "nav-link" %>
         </li>
+        <li class="nav-item">
+  <%= link_to "New Products",
+              new_products_products_path,
+              class: "nav-link" %>
+        </li>
+
+        <li class="nav-item">
+          <%= link_to "On Sale",
+                      sale_products_path,
+                      class: "nav-link" %>
+        </li>
       </ul>
       <% if customer_signed_in? %>
 <%= link_to cart_path, class: "nav-link" do %>
