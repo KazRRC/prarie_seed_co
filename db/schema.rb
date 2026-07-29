@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_23_221133) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_29_165935) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -69,10 +69,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_23_221133) do
 
   create_table "order_items", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.decimal "line_total", precision: 10, scale: 2
     t.integer "order_id", null: false
     t.decimal "price"
     t.integer "product_id", null: false
+    t.string "product_name"
     t.integer "quantity"
+    t.decimal "unit_price", precision: 10, scale: 2
     t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_order_items_on_order_id"
     t.index ["product_id"], name: "index_order_items_on_product_id"
@@ -84,12 +87,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_23_221133) do
     t.datetime "created_at", null: false
     t.integer "customer_id", null: false
     t.string "first_name"
+    t.decimal "gst_amount", precision: 10, scale: 2
+    t.decimal "gst_rate", precision: 5, scale: 2
+    t.decimal "hst_amount", precision: 10, scale: 2
+    t.decimal "hst_rate", precision: 5, scale: 2
     t.string "last_name"
+    t.string "payment_id"
     t.string "phone_number"
     t.string "postal_code"
     t.string "province"
+    t.decimal "pst_amount", precision: 10, scale: 2
+    t.decimal "pst_rate", precision: 5, scale: 2
     t.string "status"
     t.string "street_address"
+    t.decimal "subtotal", precision: 10, scale: 2
     t.decimal "total"
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_orders_on_customer_id"

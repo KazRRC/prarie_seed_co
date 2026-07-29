@@ -11,9 +11,9 @@ class Order < ApplicationRecord
             presence: true
 
   enum :status,
-       {
-         pending: "pending",
-         completed: "completed",
-         cancelled: "cancelled"
-       }
+  {
+    new_order: "new",
+    paid: "paid",
+    shipped: "shipped"
+  }
 end

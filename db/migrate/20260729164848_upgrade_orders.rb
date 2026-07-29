@@ -12,16 +12,6 @@ class UpgradeOrders < ActiveRecord::Migration[8.1]
       t.decimal :hst_amount, precision: 10, scale: 2
 
       t.string :payment_id
-
-      t.string :first_name
-      t.string :last_name
-      t.string :phone_number
-
-      t.string :street_address
-      t.string :city
-      t.string :province
-      t.string :postal_code
-      t.string :country
     end
   end
 end
