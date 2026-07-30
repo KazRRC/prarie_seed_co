@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_29_170221) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_29_174716) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -57,13 +57,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_170221) do
     t.string "last_name"
     t.string "phone_number"
     t.string "postal_code"
-    t.string "province"
+    t.integer "province_id"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
     t.string "street_address"
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_customers_on_email", unique: true
+    t.index ["province_id"], name: "index_customers_on_province_id"
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
   end
 
@@ -137,6 +138,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_170221) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "customers", "provinces"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "customers"

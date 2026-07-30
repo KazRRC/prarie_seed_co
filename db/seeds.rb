@@ -2,6 +2,15 @@ require "csv"
 require "faker"
 
 puts "Resetting database..."
+
+OrderItem.destroy_all if defined?(OrderItem)
+Order.destroy_all if defined?(Order)
+
+Customer.destroy_all
+
+Product.destroy_all
+Category.destroy_all
+
 Province.destroy_all
 
 Province.create!([
@@ -19,8 +28,7 @@ Province.create!([
   { name: "Saskatchewan", code: "SK", gst_rate: 5, pst_rate: 6, hst_rate: 0 },
   { name: "Yukon", code: "YT", gst_rate: 5, pst_rate: 0, hst_rate: 0 }
 ])
-Product.destroy_all
-Category.destroy_all
+
 
 vegetables = Category.create!(
   name: "Vegetable Seeds",
@@ -146,7 +154,7 @@ KIT_PRODUCTS = [
 
 puts "Generating additional products with Faker..."
 
-while Product.count < 90
+while Product.count < 100
   category = [fruits, flowers, kits, vegetables].sample
 
   name =
@@ -199,14 +207,25 @@ Product.order("RANDOM()").limit(10).each do |product|
   )
 end
 
-eligible = Product.where("created_at < ?", 3.days.ago)
+eligible = Product.where("created_at < ?", 5.days.ago)
 
 eligible.order("RANDOM()").limit(10).each do |product|
   product.update_columns(
     updated_at: Time.at(rand(2.days.ago.to_i..1.hour.ago.to_i))
   )
 end
+Customer.create!(
+  email: "admin@prairieseedco.ca",
+  password: "password123",
+  password_confirmation: "password123",
+  first_name: "Admin",
+  last_name: "User",
+  phone_number: "2045551234",
+  admin: true,
+  province: Province.find_by(code: "MB")
+)
 
+puts "Admin account created"
 puts "complete!"
 puts "Categories: #{Category.count}"
 puts "Products: #{Product.count}"

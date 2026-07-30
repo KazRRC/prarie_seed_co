@@ -46,8 +46,12 @@
 
     <div class="field mb-3">
       <%= f.label :province %>
-      <%= f.text_field :province,
-                       class: "form-control" %>
+<%= f.collection_select :province_id,
+                        Province.order(:name),
+                        :id,
+                        :name,
+                        { prompt: "Select Province" },
+                        { class: "form-select" } %>
     </div>
 
   </div>
