@@ -1,9 +1,10 @@
 ActiveAdmin.register Order do
+  menu priority: 3
+
   permit_params :status
 
   filter :status
   filter :customer
-  filter :created_at
 
   index do
     selectable_column
@@ -13,7 +14,6 @@ ActiveAdmin.register Order do
     column :status
     column :subtotal
     column :total
-    column :payment_id
     column :created_at
 
     actions
@@ -23,23 +23,15 @@ ActiveAdmin.register Order do
     attributes_table do
       row :customer
       row :status
-      row :payment_id
       row :subtotal
       row :gst_amount
       row :pst_amount
       row :hst_amount
       row :total
-
-      row :first_name
-      row :last_name
-      row :street_address
-      row :city
-      row :province
-      row :postal_code
-      row :country
+      row :payment_id
     end
 
-    panel "Items Purchased" do
+    panel "Items" do
       table_for order.order_items do
         column :product_name
         column :quantity
@@ -53,11 +45,7 @@ ActiveAdmin.register Order do
     f.inputs do
       f.input :status,
               as: :select,
-              collection: [
-                "new",
-                "paid",
-                "shipped"
-              ]
+              collection: %w[new paid shipped]
     end
 
     f.actions

@@ -5,7 +5,7 @@ ActiveAdmin.register Customer do
                 :phone_number,
                 :street_address,
                 :city,
-                :province,
+                :province_id,
                 :postal_code,
                 :country,
                 :admin
@@ -14,7 +14,6 @@ ActiveAdmin.register Customer do
   filter :first_name
   filter :last_name
   filter :admin
-  filter :created_at
 
   index do
     selectable_column
@@ -24,10 +23,31 @@ ActiveAdmin.register Customer do
     column :last_name
     column :email
     column :phone_number
+    column :province
     column :admin
-    column :created_at
 
     actions
+  end
+
+  form do |f|
+    f.inputs do
+      f.input :first_name
+      f.input :last_name
+      f.input :email
+      f.input :phone_number
+      f.input :street_address
+      f.input :city
+
+      f.input :province,
+              as: :select,
+              collection: Province.order(:name)
+
+      f.input :postal_code
+      f.input :country
+      f.input :admin
+    end
+
+    f.actions
   end
 
   show do
@@ -43,32 +63,7 @@ ActiveAdmin.register Customer do
       row :postal_code
       row :country
       row :admin
+      row :created_at
     end
-
-    panel "Orders" do
-      table_for customer.orders do
-        column(:id)
-        column(:status)
-        column(:total)
-        column(:created_at)
-      end
-    end
-  end
-
-  form do |f|
-    f.inputs "Customer Details" do
-      f.input :first_name
-      f.input :last_name
-      f.input :email
-      f.input :phone_number
-      f.input :street_address
-      f.input :city
-      f.input :province
-      f.input :postal_code
-      f.input :country
-      f.input :admin
-    end
-
-    f.actions
   end
 end
