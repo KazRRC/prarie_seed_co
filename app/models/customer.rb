@@ -12,18 +12,15 @@ class Customer < ApplicationRecord
   has_many :orders, dependent: :destroy
   belongs_to :province, optional: true
 
-validates :street_address,
-          presence: true
+with_options if: :address_required? do
+  validates :street_address, presence: true
+  validates :city, presence: true
+  validates :province, presence: true
+  validates :postal_code, presence: true
+  validates :country, presence: true
+end
 
-validates :city,
-          presence: true
-
-validates :province,
-          presence: true
-
-validates :postal_code,
-          presence: true
-
-validates :country,
-          presence: true
+def address_required?
+  orders.exists?
+end
 end

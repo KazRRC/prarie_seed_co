@@ -26,13 +26,21 @@ class Product < ApplicationRecord
   validates :days_to_germination, presence: true
   validates :sun_requirements, presence: true
 
-  has_one_attached :image
-
   scope :new_products,
         -> { where("created_at >= ?", 5.days.ago).order(created_at: :desc) }
 
   scope :on_sale,
         -> { where(on_sale: true).order(:name) }
+        scope :recently_updated,
+      -> {
+        where(updated_at: 5.days.ago..)
+          .where("created_at < ?", 5.days.ago)
+      }
+
+scope :featured_products,
+      -> {
+        where(featured: true)
+      }
 
   def discount_percentage
     return 0 unless on_sale? && sale_price.present? && price.present?
