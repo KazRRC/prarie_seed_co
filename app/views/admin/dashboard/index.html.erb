@@ -1,51 +1,154 @@
+<div class="row g-4">
+
+  <div class="col-md-3">
+    <div class="card shadow text-center">
+      <div class="card-body">
+        <h6>Products</h6>
+        <h1><%= @product_count %></h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card shadow text-center">
+      <div class="card-body">
+        <h6>Categories</h6>
+        <h1><%= @category_count %></h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card shadow text-center">
+      <div class="card-body">
+        <h6>Customers</h6>
+        <h1><%= @customer_count %></h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card shadow text-center">
+      <div class="card-body">
+        <h6>Orders</h6>
+        <h1><%= @order_count %></h1>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<hr class="my-5">
+
 <div class="row">
 
-<div class="col-md-4">
+  <div class="col-lg-6">
 
-<div class="card">
+    <div class="card shadow">
 
-<div class="card-body">
+      <div class="card-header bg-success text-white">
 
-<h5>Products</h5>
+        Recent Orders
 
-<h2><%= @product_count %></h2>
+      </div>
 
-</div>
+      <table class="table mb-0">
 
-</div>
+        <thead>
 
-</div>
+        <tr>
 
-<div class="col-md-4">
+          <th>#</th>
+          <th>Customer</th>
+          <th>Status</th>
 
-<div class="card">
+        </tr>
 
-<div class="card-body">
+        </thead>
 
-<h5>Categories</h5>
+        <tbody>
 
-<h2><%= @category_count %></h2>
+        <% @recent_orders.each do |order| %>
 
-</div>
+          <tr>
 
-</div>
+            <td><%= order.id %></td>
 
-</div>
+            <td><%= order.customer.email %></td>
 
-<div class="col-md-4">
+            <td>
 
-<div class="card">
+              <span class="badge bg-primary">
 
-<div class="card-body">
+                <%= order.status.titleize %>
 
-<h5>Customers</h5>
+              </span>
 
-<h2><%= @customer_count %></h2>
+            </td>
 
-</div>
+          </tr>
 
-</div>
+        <% end %>
 
-</div>
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+  <div class="col-lg-6">
+
+    <div class="card shadow">
+
+      <div class="card-header bg-warning">
+
+        Low Stock Products
+
+      </div>
+
+      <table class="table mb-0">
+
+        <thead>
+
+        <tr>
+
+          <th>Product</th>
+          <th>Remaining</th>
+
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        <% @low_stock_products.each do |product| %>
+
+          <tr>
+
+            <td><%= product.name %></td>
+
+            <td>
+
+              <span class="badge bg-danger">
+
+                <%= product.stock_quantity %>
+
+              </span>
+
+            </td>
+
+          </tr>
+
+        <% end %>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
 
 </div>

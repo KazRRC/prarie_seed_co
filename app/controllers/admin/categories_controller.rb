@@ -1,4 +1,5 @@
-class Admin::CategoriesController < ApplicationController
+class Admin::CategoriesController < Admin::BaseController
+  layout "admin"
   before_action :authenticate_customer!
   before_action :require_admin
 

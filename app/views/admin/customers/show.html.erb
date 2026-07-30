@@ -1,0 +1,107 @@
+<h1>
+
+<%= @customer.first_name %>
+<%= @customer.last_name %>
+
+</h1>
+
+<hr>
+
+<div class="row">
+
+<div class="col-md-6">
+
+<h4>Customer Information</h4>
+
+<p>
+
+<strong>Email:</strong>
+
+<%= @customer.email %>
+
+</p>
+
+<p>
+
+<strong>Phone:</strong>
+
+<%= @customer.phone_number %>
+
+</p>
+
+<p>
+
+<strong>Address:</strong>
+
+<br>
+
+<%= @customer.street_address %>
+
+<br>
+
+<%= @customer.city %>
+
+<%= @customer.province&.code %>
+
+<%= @customer.postal_code %>
+
+</p>
+
+</div>
+
+<div class="col-md-6">
+
+<h4>Orders</h4>
+
+<table class="table">
+
+<thead>
+
+<tr>
+
+<th>#</th>
+
+<th>Status</th>
+
+<th>Total</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<% @orders.each do |order| %>
+
+<tr>
+
+<td>
+
+<%= link_to order.id,
+            admin_order_path(order) %>
+
+</td>
+
+<td>
+
+<%= order.status.titleize %>
+
+</td>
+
+<td>
+
+$<%= order.total %>
+
+</td>
+
+</tr>
+
+<% end %>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>

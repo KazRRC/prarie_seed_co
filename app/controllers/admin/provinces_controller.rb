@@ -1,4 +1,8 @@
-ActiveAdmin.register Province do
+class Admin::ProvincesController < Admin::BaseController
+  layout "admin"
+
+  before_action :authenticate_customer!
+  before_action :require_admin
 
   permit_params :name,
                 :code,

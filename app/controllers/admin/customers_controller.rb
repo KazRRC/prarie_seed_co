@@ -1,69 +1,53 @@
-ActiveAdmin.register Customer do
-  permit_params :email,
-                :first_name,
-                :last_name,
-                :phone_number,
-                :street_address,
-                :city,
-                :province_id,
-                :postal_code,
-                :country,
-                :admin
+class Admin::CustomersController < Admin::BaseController
+  before_action :set_customer, only: [:show, :edit, :update, :destroy]
 
-  filter :email
-  filter :first_name
-  filter :last_name
-  filter :admin
-
-  index do
-    selectable_column
-    id_column
-
-    column :first_name
-    column :last_name
-    column :email
-    column :phone_number
-    column :province
-    column :admin
-
-    actions
+  def index
+    @customers = Customer
+                   .includes(:province)
+                   .order(:last_name, :first_name)
   end
 
-  form do |f|
-    f.inputs do
-      f.input :first_name
-      f.input :last_name
-      f.input :email
-      f.input :phone_number
-      f.input :street_address
-      f.input :city
-
-      f.input :province,
-              as: :select,
-              collection: Province.order(:name)
-
-      f.input :postal_code
-      f.input :country
-      f.input :admin
-    end
-
-    f.actions
+  def show
+    @orders = @customer.orders.order(created_at: :desc)
   end
 
-  show do
-    attributes_table do
-      row :id
-      row :first_name
-      row :last_name
-      row :email
-      row :phone_number
-      row :street_address
-      row :city
-      row :province
-      row :postal_code
-      row :country
-      row :admin
-      row :created_at
+  def edit
+  end
+
+  def update
+    if @customer.update(customer_params)
+      redirect_to admin_customers_path,
+                  notice: "Customer updated successfully."
+    else
+      render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @customer.destroy
+
+    redirect_to admin_customers_path,
+                notice: "Customer deleted."
+  end
+
+  private
+
+  def set_customer
+    @customer = Customer.find(params[:id])
+  end
+
+  def customer_params
+    params.require(:customer).permit(
+      :first_name,
+      :last_name,
+      :email,
+      :phone_number,
+      :street_address,
+      :city,
+      :province_id,
+      :postal_code,
+      :country,
+      :admin
+    )
   end
 end

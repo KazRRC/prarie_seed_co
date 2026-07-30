@@ -8,6 +8,9 @@ namespace :admin do
 
   resources :products
   resources :categories
+  resources :customers
+  resources :orders
+  resources :provinces
 end
   devise_for :customers
   root "home#index"

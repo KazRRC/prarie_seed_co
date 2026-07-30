@@ -1,0 +1,101 @@
+<h1 class="mb-4">
+  Customer Management
+</h1>
+
+<div class="card shadow">
+
+<table class="table table-hover mb-0">
+
+<thead class="table-success">
+
+<tr>
+
+<th>Name</th>
+<th>Email</th>
+<th>Province</th>
+<th>Orders</th>
+<th>Role</th>
+<th></th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<% @customers.each do |customer| %>
+
+<tr>
+
+<td>
+
+<strong>
+
+<%= customer.first_name %>
+<%= customer.last_name %>
+
+</strong>
+
+</td>
+
+<td>
+
+<%= customer.email %>
+
+</td>
+
+<td>
+
+<%= customer.province&.name || "-" %>
+
+</td>
+
+<td>
+
+<%= customer.orders.count %>
+
+</td>
+
+<td>
+
+<% if customer.admin? %>
+
+<span class="badge bg-danger">
+
+Administrator
+
+</span>
+
+<% else %>
+
+<span class="badge bg-secondary">
+
+Customer
+
+</span>
+
+<% end %>
+
+</td>
+
+<td>
+
+<%= link_to "View",
+            admin_customer_path(customer),
+            class: "btn btn-outline-primary btn-sm" %>
+
+<%= link_to "Edit",
+            edit_admin_customer_path(customer),
+            class: "btn btn-success btn-sm" %>
+
+</td>
+
+</tr>
+
+<% end %>
+
+</tbody>
+
+</table>
+
+</div>

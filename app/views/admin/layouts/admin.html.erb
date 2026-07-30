@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Prairie Seed Co. Admin</title>
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body class="bg-light">
+
+<div class="container-fluid">
+
+  <div class="row">
+
+    <!-- Sidebar -->
+
+    <nav class="col-lg-2 col-md-3 bg-success text-white min-vh-100 p-4">
+
+      <h3 class="fw-bold mb-4">
+        🌱 Prairie Seed Co.
+      </h3>
+
+      <p class="small text-white-50">
+        Administration
+      </p>
+
+      <hr>
+
+      <ul class="nav flex-column">
+
+        <li class="nav-item mb-2">
+          <%= link_to admin_root_path,
+              class: "nav-link text-white" do %>
+
+            <i class="bi bi-speedometer2"></i>
+
+            Dashboard
+
+          <% end %>
+        </li>
+
+        <li class="nav-item mb-2">
+          <%= link_to admin_products_path,
+              class: "nav-link text-white" do %>
+
+            <i class="bi bi-box-seam"></i>
+
+            Products
+
+          <% end %>
+        </li>
+
+        <li class="nav-item mb-2">
+          <%= link_to admin_categories_path,
+              class: "nav-link text-white" do %>
+
+            <i class="bi bi-grid"></i>
+
+            Categories
+
+          <% end %>
+        </li>
+
+        <li class="nav-item mb-2">
+          <%= link_to admin_customers_path,
+              class: "nav-link text-white" do %>
+
+            <i class="bi bi-people"></i>
+
+            Customers
+
+          <% end %>
+        </li>
+
+        <li class="nav-item mb-2">
+          <%= link_to admin_orders_path,
+              class: "nav-link text-white" do %>
+
+            <i class="bi bi-cart4"></i>
+
+            Orders
+
+          <% end %>
+        </li>
+
+        <li class="nav-item mb-2">
+          <%= link_to admin_provinces_path,
+              class: "nav-link text-white" do %>
+
+            <i class="bi bi-geo-alt"></i>
+
+            Provinces
+
+          <% end %>
+        </li>
+
+      </ul>
+
+      <hr>
+
+      <%= link_to root_path,
+          class: "btn btn-outline-light w-100 mb-2" do %>
+
+        <i class="bi bi-shop"></i>
+
+        Back to Store
+
+      <% end %>
+
+      <%= button_to destroy_customer_session_path,
+          method: :delete,
+          class: "btn btn-light w-100" do %>
+
+        Logout
+
+      <% end %>
+
+    </nav>
+
+    <!-- Main Content -->
+
+    <main class="col-lg-10 col-md-9">
+
+      <div class="p-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+          <div>
+
+            <h2 class="fw-bold mb-0">
+              Prairie Seed Co. Admin
+            </h2>
+
+            <small class="text-muted">
+
+              Welcome,
+              <%= current_customer.first_name %>
+
+            </small>
+
+          </div>
+
+        </div>
+
+        <% if notice %>
+
+          <div class="alert alert-success">
+
+            <%= notice %>
+
+          </div>
+
+        <% end %>
+
+        <% if alert %>
+
+          <div class="alert alert-danger">
+
+            <%= alert %>
+
+          </div>
+
+        <% end %>
+
+        <%= yield %>
+
+      </div>
+
+    </main>
+
+  </div>
+
+</div>
+
+</body>
+</html>

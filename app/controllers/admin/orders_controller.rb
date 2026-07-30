@@ -1,4 +1,10 @@
-ActiveAdmin.register Order do
+class Admin::OrdersController < Admin::BaseController
+  layout "admin"
+
+  before_action :authenticate_customer!
+  before_action :require_admin
+
+
   menu priority: 3
 
   permit_params :status
