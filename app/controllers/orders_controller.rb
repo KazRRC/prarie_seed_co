@@ -2,10 +2,11 @@ class OrdersController < ApplicationController
   before_action :authenticate_customer!
 
   def create
-    if session[:cart].blank?
-      redirect_to cart_path,
-                  alert: "Your cart is empty."
-      return
+if session[:cart].blank?
+  redirect_to cart_path,
+              alert: "Your cart is empty."
+  return
+end
     end
 unless current_customer.province
   redirect_to edit_customer_registration_path,
@@ -13,7 +14,7 @@ unless current_customer.province
   return
 end
     order = current_customer.orders.create!(
-      status: "pending",
+      status: "new",
       total: 0
     )
     province = current_customer.province

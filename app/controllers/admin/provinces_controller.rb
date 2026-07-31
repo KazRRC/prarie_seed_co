@@ -1,40 +1,38 @@
 class Admin::ProvincesController < Admin::BaseController
-  layout "admin"
+  before_action :set_province, only: [:show, :edit, :update]
 
-  before_action :authenticate_customer!
-  before_action :require_admin
-
-  permit_params :name,
-                :code,
-                :gst_rate,
-                :pst_rate,
-                :hst_rate
-
-  index do
-    selectable_column
-
-    id_column
-
-    column :name
-    column :code
-
-    column :gst_rate
-    column :pst_rate
-    column :hst_rate
-
-    actions
+  def index
+    @provinces = Province.order(:name)
   end
 
-  form do |f|
-    f.inputs do
-      f.input :name
-      f.input :code
+  def show
+  end
 
-      f.input :gst_rate
-      f.input :pst_rate
-      f.input :hst_rate
+  def edit
+  end
+
+  def update
+    if @province.update(province_params)
+      redirect_to admin_provinces_path,
+                  notice: "Province updated successfully."
+    else
+      render :edit, status: :unprocessable_entity
     end
+  end
 
-    f.actions
+  private
+
+  def set_province
+    @province = Province.find(params[:id])
+  end
+
+  def province_params
+    params.require(:province).permit(
+      :name,
+      :code,
+      :gst_rate,
+      :pst_rate,
+      :hst_rate
+    )
   end
 end

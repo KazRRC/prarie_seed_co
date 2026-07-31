@@ -1,59 +1,38 @@
 class Admin::OrdersController < Admin::BaseController
-  layout "admin"
+  before_action :set_order, only: [:show, :edit, :update, :destroy]
+  def destroy
+  @order.destroy
+  redirect_to admin_orders_path,
+              notice: "Order deleted successfully."
+end
 
-  before_action :authenticate_customer!
-  before_action :require_admin
-
-
-  menu priority: 3
-
-  permit_params :status
-
-  filter :status
-  filter :customer
-
-  index do
-    selectable_column
-    id_column
-
-    column :customer
-    column :status
-    column :subtotal
-    column :total
-    column :created_at
-
-    actions
+  def index
+    @orders = Order.includes(:customer)
+                   .order(created_at: :desc)
   end
 
-  show do
-    attributes_table do
-      row :customer
-      row :status
-      row :subtotal
-      row :gst_amount
-      row :pst_amount
-      row :hst_amount
-      row :total
-      row :payment_id
-    end
+  def show
+  end
 
-    panel "Items" do
-      table_for order.order_items do
-        column :product_name
-        column :quantity
-        column :unit_price
-        column :line_total
-      end
+  def edit
+  end
+
+  def update
+    if @order.update(order_params)
+      redirect_to admin_order_path(@order),
+                  notice: "Order updated successfully."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
-  form do |f|
-    f.inputs do
-      f.input :status,
-              as: :select,
-              collection: %w[new paid shipped]
-    end
+  private
 
-    f.actions
+  def set_order
+    @order = Order.find(params[:id])
+  end
+
+  def order_params
+    params.require(:order).permit(:status)
   end
 end

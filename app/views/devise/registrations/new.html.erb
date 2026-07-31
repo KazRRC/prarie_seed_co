@@ -32,24 +32,13 @@
 
 <div class="mb-3">
   <%= f.label :province %>
-  <%= f.select :province,
-      [
-        "Alberta",
-        "British Columbia",
-        "Manitoba",
-        "New Brunswick",
-        "Newfoundland and Labrador",
-        "Northwest Territories",
-        "Nova Scotia",
-        "Nunavut",
-        "Ontario",
-        "Prince Edward Island",
-        "Quebec",
-        "Saskatchewan",
-        "Yukon"
-      ],
-      { prompt: "Select Province" },
-      class: "form-select" %>
+
+  <%= f.collection_select :province_id,
+                          Province.order(:name),
+                          :id,
+                          :name,
+                          { prompt: "Select Province" },
+                          class: "form-select" %>
 </div>
 
 <div class="mb-3">

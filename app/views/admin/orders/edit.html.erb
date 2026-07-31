@@ -1,0 +1,19 @@
+<h1>Update Order</h1>
+
+<%= form_with model: [:admin, @order] do |f| %>
+
+<div class="mb-3">
+
+<%= f.label :status %>
+
+<%= f.select :status,
+             ["new","paid","shipped"],
+             {},
+             class: "form-select" %>
+
+</div>
+
+<%= f.submit "Save",
+             class: "btn btn-success" %>
+
+<% end %>

@@ -4,37 +4,37 @@ class ApplicationController < ActionController::Base
 
   before_action :initialize_cart
 
-  protected
+ protected
 
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(
-      :sign_up,
-      keys: [
-        :first_name,
-        :last_name,
-        :phone_number,
-        :street_address,
-        :city,
-        :province,
-        :postal_code,
-        :country
-      ]
-    )
+def configure_permitted_parameters
+  devise_parameter_sanitizer.permit(
+    :sign_up,
+    keys: [
+      :first_name,
+      :last_name,
+      :phone_number,
+      :street_address,
+      :city,
+      :province_id,
+      :postal_code,
+      :country
+    ]
+  )
 
-    devise_parameter_sanitizer.permit(
-      :account_update,
-      keys: [
-        :first_name,
-        :last_name,
-        :phone_number,
-        :street_address,
-        :city,
-        :province,
-        :postal_code,
-        :country
-      ]
-    )
-  end
+  devise_parameter_sanitizer.permit(
+    :account_update,
+    keys: [
+      :first_name,
+      :last_name,
+      :phone_number,
+      :street_address,
+      :city,
+      :province_id,
+      :postal_code,
+      :country
+    ]
+  )
+end
 
   private
 

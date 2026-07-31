@@ -1,0 +1,117 @@
+<%= form_with model: [:admin, @customer] do |f| %>
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+
+<%= f.label :first_name %>
+
+<%= f.text_field :first_name,
+                 class: "form-control" %>
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<%= f.label :last_name %>
+
+<%= f.text_field :last_name,
+                 class: "form-control" %>
+
+</div>
+
+</div>
+
+<div class="mb-3">
+
+<%= f.label :email %>
+
+<%= f.email_field :email,
+                  class: "form-control" %>
+
+</div>
+
+<div class="mb-3">
+
+<%= f.label :phone_number %>
+
+<%= f.text_field :phone_number,
+                 class: "form-control" %>
+
+</div>
+
+<div class="mb-3">
+
+<%= f.label :street_address %>
+
+<%= f.text_field :street_address,
+                 class: "form-control" %>
+
+</div>
+
+<div class="row">
+
+<div class="col-md-6">
+
+<%= f.label :city %>
+
+<%= f.text_field :city,
+                 class: "form-control" %>
+
+</div>
+
+<div class="col-md-6">
+
+<%= f.label :province %>
+
+<%= f.collection_select :province_id,
+                        Province.order(:name),
+                        :id,
+                        :name,
+                        {},
+                        class: "form-select" %>
+
+</div>
+
+</div>
+
+<div class="row mt-3">
+
+<div class="col-md-6">
+
+<%= f.label :postal_code %>
+
+<%= f.text_field :postal_code,
+                 class: "form-control" %>
+
+</div>
+
+<div class="col-md-6">
+
+<%= f.label :country %>
+
+<%= f.text_field :country,
+                 class: "form-control" %>
+
+</div>
+
+</div>
+
+<div class="form-check mt-4">
+
+<%= f.check_box :admin,
+                class: "form-check-input" %>
+
+<%= f.label :admin,
+            class: "form-check-label" %>
+
+</div>
+
+<div class="mt-4">
+
+<%= f.submit "Save Customer",
+             class: "btn btn-success" %>
+
+</div>
+
+<% end %>

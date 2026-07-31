@@ -1,0 +1,43 @@
+<h1>Edit Province</h1>
+
+<%= form_with model: [:admin, @province] do |f| %>
+
+<div class="mb-3">
+
+<%= f.label :name %>
+<%= f.text_field :name,
+                 class: "form-control" %>
+
+</div>
+
+<div class="mb-3">
+
+<%= f.label :gst_rate %>
+<%= f.number_field :gst_rate,
+                   step: 0.001,
+                   class: "form-control" %>
+
+</div>
+
+<div class="mb-3">
+
+<%= f.label :pst_rate %>
+<%= f.number_field :pst_rate,
+                   step: 0.001,
+                   class: "form-control" %>
+
+</div>
+
+<div class="mb-3">
+
+<%= f.label :hst_rate %>
+<%= f.number_field :hst_rate,
+                   step: 0.001,
+                   class: "form-control" %>
+
+</div>
+
+<%= f.submit "Save Changes",
+             class: "btn btn-success" %>
+
+<% end %>
