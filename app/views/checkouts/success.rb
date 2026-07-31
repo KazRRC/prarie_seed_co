@@ -1,19 +1,26 @@
 <div class="container py-5 text-center">
 
-  <h1 class="text-success">
-    Payment Successful!
-  </h1>
+<h1>
+Thank you for your order!
+</h1>
 
-  <p class="lead">
-    Thank you for your purchase.
-  </p>
 
-  <p>
-    Your order is now being processed.
-  </p>
+<p>
+Your payment was successful.
+</p>
 
-  <%= link_to "Return to Store",
-              root_path,
-              class: "btn btn-success" %>
+
+<p>
+Your order number is:
+<strong>
+#<%= @order.id %>
+</strong>
+</p>
+
+
+<%= link_to "View My Orders",
+            orders_path,
+            class: "btn btn-success" %>
+
 
 </div>

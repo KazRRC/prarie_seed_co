@@ -7,11 +7,11 @@ class Order < ApplicationRecord
             presence: true,
             numericality: { greater_than_or_equal_to: 0 }
 
-  validates :status, presence: true
-
   enum :status, {
-    pending: "new",
-    paid: "paid",
-    shipped: "shipped"
+    pending: 0,
+    paid: 1,
+    shipped: 2
   }
+
+  validates :status, presence: true
 end

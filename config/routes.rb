@@ -37,5 +37,11 @@ end
 resources :orders, only: [:index, :show, :create]
 resource :checkout, only: [:show, :create] do
   get :success
+  get :cancel
+end
+resources :orders do
+  member do
+    patch :ship
+  end
 end
 end

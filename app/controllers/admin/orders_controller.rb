@@ -25,6 +25,14 @@ end
       render :edit, status: :unprocessable_entity
     end
   end
+  def ship
+  @order = Order.find(params[:id])
+
+  @order.shipped!
+
+  redirect_to admin_order_path(@order),
+              notice: "Order marked as shipped."
+end
 
   private
 

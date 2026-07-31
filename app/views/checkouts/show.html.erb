@@ -1,87 +1,163 @@
 <div class="container py-5">
 
-<h1>Checkout</h1>
+<h1 class="mb-4">
+  Checkout
+</h1>
 
-<hr>
 
-<h3>Shipping Address</h3>
+<div class="row">
 
-<p>
-<strong><%= current_customer.first_name %> <%= current_customer.last_name %></strong><br>
+<div class="col-md-8">
 
-<%= current_customer.street_address %><br>
+<div class="card shadow">
 
-<%= current_customer.city %>,
-<%= current_customer.province.name %><br>
+<div class="card-header bg-success text-white">
+  Order Summary
+</div>
 
-<%= current_customer.postal_code %><br>
 
-<%= current_customer.country %>
-</p>
-
-<hr>
-
-<h3>Order Summary</h3>
-
-<table class="table">
-
-<thead>
-
-<tr>
-
-<th>Product</th>
-<th>Qty</th>
-<th>Total</th>
-
-</tr>
-
-</thead>
-
-<tbody>
+<div class="card-body">
 
 <% @cart_items.each do |item| %>
 
-<tr>
+<div class="d-flex justify-content-between mb-3">
 
-<td><%= item[:product].name %></td>
+<div>
 
-<td><%= item[:quantity] %></td>
+<strong>
+<%= item[:product].name %>
+</strong>
 
-<td><%= number_to_currency(item[:total]) %></td>
+<br>
 
-</tr>
+Quantity:
+<%= item[:quantity] %>
+
+</div>
+
+
+<div>
+
+$<%= item[:total] %>
+
+</div>
+
+
+</div>
+
+<hr>
 
 <% end %>
 
-</tbody>
-
-</table>
-
-<hr>
-
-<p><strong>Subtotal:</strong> <%= number_to_currency(@subtotal) %></p>
-
-<p><strong>GST:</strong> <%= number_to_currency(@gst) %></p>
-
-<p><strong>PST:</strong> <%= number_to_currency(@pst) %></p>
-
-<p><strong>HST:</strong> <%= number_to_currency(@hst) %></p>
-
-<h3>
-
-Grand Total:
-<%= number_to_currency(@grand_total) %>
-
-</h3>
-
-<hr>
 
 <div class="text-end">
 
-<%= button_to "Continue to Payment",
+<p>
+Subtotal:
+<strong>
+$<%= number_with_precision(@subtotal, precision: 2) %>
+</strong>
+</p>
+
+
+<p>
+GST:
+<strong>
+$<%= number_with_precision(@gst, precision: 2) %>
+</strong>
+</p>
+
+
+<p>
+PST:
+<strong>
+$<%= number_with_precision(@pst, precision: 2) %>
+</strong>
+</p>
+
+
+<p>
+HST:
+<strong>
+$<%= number_with_precision(@hst, precision: 2) %>
+</strong>
+</p>
+
+
+<h4>
+Total:
+$<%= number_with_precision(@grand_total, precision: 2) %>
+</h4>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="col-md-4">
+
+
+<div class="card shadow">
+
+<div class="card-header">
+Shipping Information
+</div>
+
+
+<div class="card-body">
+
+
+<p>
+<strong>
+<%= current_customer.first_name %>
+<%= current_customer.last_name %>
+</strong>
+</p>
+
+
+<p>
+<%= current_customer.street_address %>
+</p>
+
+
+<p>
+<%= current_customer.city %>,
+<%= current_customer.province.name %>
+</p>
+
+
+<p>
+<%= current_customer.postal_code %>
+</p>
+
+
+<p>
+<%= current_customer.country %>
+</p>
+
+
+</div>
+
+</div>
+
+
+<br>
+
+
+<%= button_to "Proceed to Payment",
               checkout_path,
               method: :post,
-              class: "btn btn-success btn-lg" %>
+              class: "btn btn-success btn-lg w-100" %>
+
+
+</div>
+
 
 </div>
 
