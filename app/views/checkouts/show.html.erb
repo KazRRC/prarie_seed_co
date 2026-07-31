@@ -78,11 +78,10 @@ Grand Total:
 
 <div class="text-end">
 
-<button class="btn btn-success btn-lg" disabled>
-
-Pay with Stripe (Coming Next)
-
-</button>
+<%= button_to "Continue to Payment",
+              checkout_path,
+              method: :post,
+              class: "btn btn-success btn-lg" %>
 
 </div>
 
