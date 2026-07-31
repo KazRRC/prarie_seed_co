@@ -1,0 +1,89 @@
+<div class="container py-5">
+
+<h1>Checkout</h1>
+
+<hr>
+
+<h3>Shipping Address</h3>
+
+<p>
+<strong><%= current_customer.first_name %> <%= current_customer.last_name %></strong><br>
+
+<%= current_customer.street_address %><br>
+
+<%= current_customer.city %>,
+<%= current_customer.province.name %><br>
+
+<%= current_customer.postal_code %><br>
+
+<%= current_customer.country %>
+</p>
+
+<hr>
+
+<h3>Order Summary</h3>
+
+<table class="table">
+
+<thead>
+
+<tr>
+
+<th>Product</th>
+<th>Qty</th>
+<th>Total</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<% @cart_items.each do |item| %>
+
+<tr>
+
+<td><%= item[:product].name %></td>
+
+<td><%= item[:quantity] %></td>
+
+<td><%= number_to_currency(item[:total]) %></td>
+
+</tr>
+
+<% end %>
+
+</tbody>
+
+</table>
+
+<hr>
+
+<p><strong>Subtotal:</strong> <%= number_to_currency(@subtotal) %></p>
+
+<p><strong>GST:</strong> <%= number_to_currency(@gst) %></p>
+
+<p><strong>PST:</strong> <%= number_to_currency(@pst) %></p>
+
+<p><strong>HST:</strong> <%= number_to_currency(@hst) %></p>
+
+<h3>
+
+Grand Total:
+<%= number_to_currency(@grand_total) %>
+
+</h3>
+
+<hr>
+
+<div class="text-end">
+
+<button class="btn btn-success btn-lg" disabled>
+
+Pay with Stripe (Coming Next)
+
+</button>
+
+</div>
+
+</div>

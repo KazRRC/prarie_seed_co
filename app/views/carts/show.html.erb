@@ -102,10 +102,9 @@
       </h3>
 
     </div>
-<%= button_to "Proceed to Checkout",
-              orders_path,
-              method: :post,
-              class: "btn btn-success btn-lg" %>
+<%= link_to "Proceed to Checkout",
+            checkout_path,
+            class: "btn btn-success btn-lg" %>
 
   <% end %>
 

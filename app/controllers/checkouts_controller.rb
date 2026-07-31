@@ -3,8 +3,7 @@ class CheckoutsController < ApplicationController
 
   def show
     if session[:cart].blank?
-      redirect_to cart_path,
-                  alert: "Your cart is empty."
+      redirect_to cart_path, alert: "Your cart is empty."
       return
     end
 
@@ -36,5 +35,9 @@ class CheckoutsController < ApplicationController
     @hst = @subtotal * @province.hst_rate / 100
 
     @grand_total = @subtotal + @gst + @pst + @hst
+  end
+
+  def create
+    # Stripe code will go here next.
   end
 end
