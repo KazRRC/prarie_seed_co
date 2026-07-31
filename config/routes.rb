@@ -35,5 +35,7 @@ resource :cart, only: [:show] do
   delete "remove/:product_id", to: "carts#remove", as: :remove
 end
 resources :orders, only: [:index, :show, :create]
-resource :checkout, only: [:show, :create]
+resource :checkout, only: [:show, :create] do
+  get :success
+end
 end
