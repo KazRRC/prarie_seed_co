@@ -140,27 +140,81 @@ def create
 end
 end
 def success
+  stripe_session = Stripe::Checkout::Session.retrieve(params[:session_id])
 
+  unless stripe_session.payment_status == "paid"
+    redirect_to checkout_path,
+                alert: "Payment could not be verified."
+    return
+  end
 
-  checkout_session =
-    Stripe::Checkout::Session.retrieve(params[:session_id])
+  # Prevent duplicate orders if the success URL is refreshed
+  existing_order = Order.find_by(payment_id: stripe_session.payment_intent)
 
+  if existing_order
+    redirect_to order_path(existing_order)
+    return
+  end
 
-  @order = Order.find_by!(
-    stripe_session_id: checkout_session.id
-  )
+  province = current_customer.province
 
-
-  @order.update!(
+  order = current_customer.orders.create!(
     status: :paid,
-    paid_at: Time.current,
-    stripe_payment_intent: checkout_session.payment_intent,
-    payment_id: checkout_session.payment_intent
+    total: 0,
+    payment_id: stripe_session.payment_intent,
+    paid_at: Time.current
   )
 
+  order.update!(
+    first_name: current_customer.first_name,
+    last_name: current_customer.last_name,
+    phone_number: current_customer.phone_number,
+    street_address: current_customer.street_address,
+    city: current_customer.city,
+    province: province.name,
+    postal_code: current_customer.postal_code,
+    country: current_customer.country,
+    gst_rate: province.gst_rate,
+    pst_rate: province.pst_rate,
+    hst_rate: province.hst_rate
+  )
+
+  subtotal = 0
+
+  session[:cart].each do |product_id, quantity|
+
+    product = Product.find(product_id)
+
+    price = product.on_sale? ? product.sale_price : product.price
+
+    line_total = price * quantity
+
+    order.order_items.create!(
+      product: product,
+      product_name: product.name,
+      quantity: quantity,
+      unit_price: price,
+      line_total: line_total
+    )
+
+    subtotal += line_total
+
+  end
+
+  gst = subtotal * province.gst_rate / 100
+  pst = subtotal * province.pst_rate / 100
+  hst = subtotal * province.hst_rate / 100
+
+  order.update!(
+    subtotal: subtotal,
+    gst_amount: gst,
+    pst_amount: pst,
+    hst_amount: hst,
+    total: subtotal + gst + pst + hst
+  )
 
   session[:cart] = {}
 
-
-end
+  redirect_to order_path(order),
+              notice: "Payment successful!"
 end
