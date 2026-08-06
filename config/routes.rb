@@ -9,7 +9,11 @@ namespace :admin do
   resources :products
   resources :categories
   resources :customers
-  resources :orders
+  resources :orders do
+        member do
+      patch :ship
+    end
+  end
   resources :provinces
 end
   devise_for :customers

@@ -24,9 +24,6 @@ class OrdersController < ApplicationController
       total: 0
     )
 
-
-    # rest of your order creation code here
-
   end
 
 

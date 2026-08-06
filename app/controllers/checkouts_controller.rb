@@ -98,7 +98,7 @@ def create
     hst_amount: hst,
     total: total
   )
-
+  begin
   stripe_session = Stripe::Checkout::Session.create(
     mode: "payment",
 
@@ -131,6 +131,13 @@ def create
 
   redirect_to stripe_session.url,
               allow_other_host: true
+  rescue => e
+  Rails.logger.error e.message
+  Rails.logger.error e.backtrace.join("\n")
+
+  redirect_to checkout_path,
+              alert: e.message
+end
 end
 def success
 

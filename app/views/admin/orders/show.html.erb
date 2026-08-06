@@ -42,33 +42,39 @@
 
 <h3>Items</h3>
 
-<table class="table">
+<h3>Items</h3>
 
-<thead>
+<h3>Items</h3>
 
-<tr>
+<table class="table table-striped">
 
-<th>Product</th>
-<th>Qty</th>
-<th>Price</th>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Unit Price</th>
+      <th>Line Total</th>
+    </tr>
+  </thead>
 
-</tr>
+  <tbody>
 
-</thead>
+    <% @order.order_items.each do |item| %>
 
-<tbody>
+      <tr>
 
-<% @order.order_items.each do |item| %>
+        <td><%= item.product.name %></td>
 
-<tr>
-  <td><%= item.product_name %></td>
-  <td><%= item.quantity %></td>
-  <td><%= number_to_currency(item.unit_price %></td>
-  <td><%= number_to_currency(item.line_total) %></td>
-</tr>
+        <td><%= item.quantity %></td>
 
-<% end %>
+        <td><%= number_to_currency(item.price) %></td>
 
-</tbody>
+        <td><%= number_to_currency(item.price * item.quantity) %></td>
+
+      </tr>
+
+    <% end %>
+
+  </tbody>
 
 </table>
