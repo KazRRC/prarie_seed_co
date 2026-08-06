@@ -38,7 +38,7 @@ resource :cart, only: [:show] do
   patch "update/:product_id", to: "carts#update", as: :update
   delete "remove/:product_id", to: "carts#remove", as: :remove
 end
-resources :orders, only: [:index, :show, :create]
+resources :orders, only: [:index, :show]
 resource :checkout, only: [:show, :create] do
   get :success
   get :cancel
