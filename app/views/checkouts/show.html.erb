@@ -1,164 +1,176 @@
 <div class="container py-5">
 
-<h1 class="mb-4">
-  Checkout
-</h1>
+  <h1 class="mb-4">Checkout</h1>
 
+  <div class="row g-4">
 
-<div class="row">
+```
+<!-- Order Summary -->
+<div class="col-lg-8">
 
-<div class="col-md-8">
+  <div class="card shadow">
 
-<div class="card shadow">
+    <div class="card-header bg-success text-white">
+      <h5 class="mb-0">Order Summary</h5>
+    </div>
 
-<div class="card-header bg-success text-white">
-  Order Summary
-</div>
+    <div class="card-body">
 
+      <% @cart_items.each do |item| %>
 
-<div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
 
-<% @cart_items.each do |item| %>
+          <div>
+            <strong>
+              <%= item[:product].name %>
+            </strong>
 
-<div class="d-flex justify-content-between mb-3">
+            <div class="text-muted">
+              Quantity: <%= item[:quantity] %>
+            </div>
+          </div>
 
-<div>
+          <div>
+            <%= number_to_currency(item[:total]) %>
+          </div>
 
-<strong>
-<%= item[:product].name %>
-</strong>
+        </div>
 
-<br>
+        <hr>
 
-Quantity:
-<%= item[:quantity] %>
+      <% end %>
 
-</div>
+      <div class="text-end">
 
+        <p class="mb-1">
+          Subtotal:
+          <strong>
+            <%= number_to_currency(@subtotal) %>
+          </strong>
+        </p>
 
-<div>
+        <% if @gst.to_d > 0 %>
+          <p class="mb-1">
+            GST:
+            <strong>
+              <%= number_to_currency(@gst) %>
+            </strong>
+          </p>
+        <% end %>
 
-$<%= item[:total] %>
+        <% if @pst.to_d > 0 %>
+          <p class="mb-1">
+            PST:
+            <strong>
+              <%= number_to_currency(@pst) %>
+            </strong>
+          </p>
+        <% end %>
 
-</div>
+        <% if @hst.to_d > 0 %>
+          <p class="mb-1">
+            HST:
+            <strong>
+              <%= number_to_currency(@hst) %>
+            </strong>
+          </p>
+        <% end %>
 
+        <hr>
 
-</div>
+        <h4>
+          Total:
+          <%= number_to_currency(@grand_total) %>
+        </h4>
 
-<hr>
+      </div>
 
-<% end %>
+    </div>
 
-
-<div class="text-end">
-
-<p>
-Subtotal:
-<strong>
-$<%= number_with_precision(@subtotal, precision: 2) %>
-</strong>
-</p>
-
-
-<p>
-GST:
-<strong>
-$<%= number_with_precision(@gst, precision: 2) %>
-</strong>
-</p>
-
-
-<p>
-PST:
-<strong>
-$<%= number_with_precision(@pst, precision: 2) %>
-</strong>
-</p>
-
-
-<p>
-HST:
-<strong>
-$<%= number_with_precision(@hst, precision: 2) %>
-</strong>
-</p>
-
-
-<h4>
-Total:
-$<%= number_with_precision(@grand_total, precision: 2) %>
-</h4>
-
-
-</div>
-
-
-</div>
-
-</div>
+  </div>
 
 </div>
 
 
-<div class="col-md-4">
+<!-- Shipping Information -->
+<div class="col-lg-4">
+
+  <div class="card shadow mb-4">
+
+    <div class="card-header">
+      <h5 class="mb-0">Shipping Information</h5>
+    </div>
+
+    <div class="card-body">
+
+      <p>
+        <strong>
+          <%= current_customer.first_name %>
+          <%= current_customer.last_name %>
+        </strong>
+      </p>
+
+      <p class="mb-1">
+        <%= current_customer.street_address %>
+      </p>
+
+      <p class="mb-1">
+        <%= current_customer.city %>,
+        <%= current_customer.province.name %>
+      </p>
+
+      <p class="mb-1">
+        <%= current_customer.postal_code %>
+      </p>
+
+      <p>
+        <%= current_customer.country %>
+      </p>
+
+      <hr>
+
+      <%= link_to "Edit Shipping Information",
+                  edit_customer_registration_path,
+                  class: "btn btn-outline-secondary w-100" %>
+
+    </div>
+
+  </div>
 
 
-<div class="card shadow">
+  <!-- Payment -->
+  <div class="card shadow">
 
-<div class="card-header">
-Shipping Information
+    <div class="card-header bg-success text-white">
+      <h5 class="mb-0">Payment</h5>
+    </div>
+
+    <div class="card-body">
+
+      <p class="text-muted">
+        You will be securely redirected to Stripe to complete your payment.
+      </p>
+
+      <%= form_with url: checkout_path,
+                    method: :post,
+                    data: { turbo: false } do %>
+
+        <button type="submit"
+                class="btn btn-success btn-lg w-100">
+
+          Proceed to Payment
+
+        </button>
+
+      <% end %>
+
+    </div>
+
+  </div>
+
 </div>
+```
 
-
-<div class="card-body">
-
-
-<p>
-<strong>
-<%= current_customer.first_name %>
-<%= current_customer.last_name %>
-</strong>
-</p>
-
-
-<p>
-<%= current_customer.street_address %>
-</p>
-
-
-<p>
-<%= current_customer.city %>,
-<%= current_customer.province.name %>
-</p>
-
-
-<p>
-<%= current_customer.postal_code %>
-</p>
-
-
-<p>
-<%= current_customer.country %>
-</p>
-
-
-</div>
-
-</div>
-
-
-<br>
-
-
-<%= button_to "Proceed to Payment",
-              checkout_path,
-              method: :post,
-              class: "btn btn-success btn-lg w-100" %>
-
-
-</div>
-
-
-</div>
+  </div>
 
 </div>

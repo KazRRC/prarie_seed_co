@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  get "orders/index"
-  get "orders/show"
-  get "orders/create"
   get "carts/show"
 namespace :admin do
   root "dashboard#index"
@@ -33,19 +30,17 @@ end
     get :new_products
 end
 end
+
 resource :cart, only: [:show] do
-  post "add/:product_id", to: "carts#add", as: :add
-  patch "update/:product_id", to: "carts#update", as: :update
+  post   "add/:product_id",    to: "carts#add",    as: :add
+  patch  "update/:product_id", to: "carts#update", as: :update
   delete "remove/:product_id", to: "carts#remove", as: :remove
 end
-resources :orders, only: [:index, :show]
+
 resource :checkout, only: [:show, :create] do
   get :success
   get :cancel
 end
-resources :orders do
-  member do
-    patch :ship
-  end
-end
+
+resources :orders, only: [:index, :show]
 end
