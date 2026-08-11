@@ -1,0 +1,96 @@
+<% breadcrumbs = [] %>
+
+<% breadcrumbs << ["Home", root_path] %>
+
+<% if controller_name == "products" %>
+
+  <% if action_name == "show" && @product.present? %>
+
+    <%
+      breadcrumbs << ["Products", products_path]
+
+      if @product.category.present?
+        breadcrumbs << [
+          @product.category.name,
+          category_products_path(@product.category)
+        ]
+      end
+
+      breadcrumbs << [@product.name, nil]
+    %>
+
+  <% elsif action_name == "new_products" %>
+
+    <% breadcrumbs << ["New Products", new_products_products_path] %>
+
+  <% elsif action_name == "sale" %>
+
+    <% breadcrumbs << ["On Sale", sale_products_path] %>
+
+  <% else %>
+
+    <% breadcrumbs << ["Products", products_path] %>
+
+  <% end %>
+
+<% elsif controller_name == "categories" %>
+
+  <% if action_name == "show" && @category.present? %>
+
+    <% breadcrumbs << ["Categories", categories_path] %>
+    <% breadcrumbs << [@category.name, nil] %>
+
+  <% else %>
+
+    <% breadcrumbs << ["Categories", categories_path] %>
+
+  <% end %>
+
+<% elsif controller_name == "orders" %>
+
+  <% breadcrumbs << ["My Orders", orders_path] %>
+
+  <% if action_name == "show" && @order.present? %>
+    <% breadcrumbs << ["Order ##{@order.id}", nil] %>
+  <% end %>
+
+<% elsif controller_name == "carts" %>
+
+  <% breadcrumbs << ["Shopping Cart", cart_path] %>
+
+<% elsif controller_name == "checkouts" %>
+
+  <% breadcrumbs << ["Checkout", checkout_path] %>
+
+<% end %>
+
+<nav aria-label="breadcrumb" class="breadcrumb-wrapper">
+
+  <ol class="breadcrumb">
+
+    <% breadcrumbs.each_with_index do |(name, path), index| %>
+
+      <% if index == breadcrumbs.length - 1 || path.nil? %>
+
+        <li class="breadcrumb-item active"
+            aria-current="page">
+
+          <%= name %>
+
+        </li>
+
+      <% else %>
+
+        <li class="breadcrumb-item">
+
+          <%= link_to name, path %>
+
+        </li>
+
+      <% end %>
+
+    <% end %>
+
+  </ol>
+
+</nav>
