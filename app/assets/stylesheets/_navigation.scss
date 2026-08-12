@@ -1,0 +1,26 @@
+.breadcrumb-wrapper {
+  margin-bottom: $spacing;
+
+  .breadcrumb {
+    margin-bottom: 0;
+    padding: $spacing / 2;
+    background: $light;
+    border-radius: 0.5rem;
+
+    .breadcrumb-item {
+
+      a {
+        color: $primary;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      &.active {
+        color: #6c757d;
+      }
+    }
+  }
+}
