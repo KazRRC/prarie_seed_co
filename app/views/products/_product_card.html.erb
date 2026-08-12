@@ -1,15 +1,9 @@
 <div class="col">
-  <div class="card product-card h-100">
+  <div class="card product-card h-100 shadow-sm">
 
     <% if product.image.attached? %>
 
-      <%= image_tag product.image.variant(resize_to_fill: [300, 200]),
-                    class: "card-img-top product-card-image",
-                    alt: product.name %>
-
-    <% elsif product.image_url.present? %>
-
-      <%= image_tag product.image_url,
+      <%= image_tag product.image,
                     class: "card-img-top product-card-image",
                     alt: product.name %>
 
@@ -17,7 +11,7 @@
 
       <%= image_tag "placeholder.png",
                     class: "card-img-top product-card-image",
-                    alt: "No image available" %>
+                    alt: product.name %>
 
     <% end %>
 
@@ -27,19 +21,19 @@
         <%= product.name %>
       </h5>
 
-      <p class="card-text text-muted">
+      <p class="card-text">
         <%= truncate(product.description, length: 100) %>
       </p>
 
       <% if product.on_sale? && product.sale_price.present? %>
 
-        <div class="product-price mb-3">
+        <div class="mb-2">
 
           <span class="text-muted text-decoration-line-through">
             $<%= number_with_precision(product.price, precision: 2) %>
           </span>
 
-          <span class="text-danger fw-bold ms-2">
+          <span class="fw-bold text-danger ms-2">
             $<%= number_with_precision(product.sale_price, precision: 2) %>
           </span>
 
@@ -51,19 +45,19 @@
 
       <% else %>
 
-        <p class="fw-bold mb-3">
+        <p class="fw-bold mb-2">
           $<%= number_with_precision(product.price, precision: 2) %>
         </p>
 
       <% end %>
 
-      <div class="mt-auto">
+      <p class="small text-muted">
+        Stock: <%= product.stock_quantity %>
+      </p>
 
-        <%= link_to "View Product",
-                    product_path(product),
-                    class: "btn btn-success w-100" %>
-
-      </div>
+      <%= link_to "View Product",
+                  product_path(product),
+                  class: "btn btn-success mt-auto" %>
 
     </div>
 
