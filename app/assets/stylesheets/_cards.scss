@@ -1,0 +1,14 @@
+%card-shadow {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.product-card {
+  @extend %card-shadow;
+
+  border-radius: $card-radius;
+  overflow: hidden;
+
+  &:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  }
+}
