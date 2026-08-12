@@ -1,171 +1,24 @@
 <div class="container py-5">
 
-  <div class="row mb-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
 
-    <div class="col-lg-8">
-<h1 class="display-5 fw-bold">
+    <div>
+      <h1>Products</h1>
 
-<% if action_name == "new_products" %>
-  New Products
-<% elsif action_name == "sale" %>
-  On Sale
-<% else %>
-  Our Products
-<% end %>
-
-</h1>
-
-      <p class="lead text-muted">
-        Browse our collection of high-quality vegetable, flower, fruit, and gardening products.
+      <p class="text-muted mb-0">
+        Browse our selection of seeds and gardening products.
       </p>
     </div>
 
-    <div class="col-lg-4">
-
-      <%= form_with url: products_path,
-                    method: :get,
-                    local: true do |form| %>
-
-        <div class="input-group">
-
-          <%= form.text_field :search,
-                              value: params[:search],
-                              placeholder: "Search products or categories...",
-                              class: "form-control" %>
-
-          <%= form.submit "Search",
-                          class: "btn btn-success" %>
-
-        </div>
-
-      <% end %>
-
-    </div>
-
   </div>
 
-  <div class="row">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
     <% @products.each do |product| %>
 
-      <div class="col-sm-6 col-lg-4 mb-4">
-
-        <div class="card shadow-sm h-100">
-          <% if product.on_sale? %>
-            <span class="badge bg-danger mb-2">
-              🏷️ Sale !
-            </span>
-          <% end %>
-          <% if product.image.attached? %>
-
-            <%= image_tag product.image,
-                          class: "card-img-top",
-                          style: "height:250px; object-fit:cover;" %>
-
-          <% else %>
-
-            <%= image_tag "placeholder.png",
-                          class: "card-img-top",
-                          style: "height:250px; object-fit:cover;" %>
-
-          <% end %>
-
-          <div class="card-body d-flex flex-column">
-
-            <h5 class="card-title">
-
-              <%= link_to product.name,
-                          product_path(product),
-                          class: "text-decoration-none text-dark" %>
-
-            </h5>
-
-            <p class="text-muted mb-2">
-
-              <%= product.category.name %>
-
-            </p>
-
-            <p class="card-text">
-
-              <%= truncate(product.description, length: 100) %>
-
-            </p>
-
-            <div class="mt-auto">
-
-              <% if product.on_sale? && product.sale_price.present? %>
-
-                <p class="mb-1">
-
-                  <span class="text-muted text-decoration-line-through">
-                    $<%= sprintf("%.2f", product.price) %>
-                  </span>
-
-                </p>
-
-                <h5 class="text-danger fw-bold">
-
-                  $<%= sprintf("%.2f", product.sale_price) %>
-
-                  <span class="badge bg-danger ms-2">
-                    <%= product.discount_percentage %>% OFF
-                  </span>
-
-                </h5>
-
-              <% else %>
-
-                <h5 class="text-success fw-bold">
-                  $<%= sprintf("%.2f", product.price) %>
-                </h5>
-
-              <% end %>
-
-              <% if product.featured? %>
-
-                <span class="badge bg-warning text-dark">
-
-                  Featured
-
-                </span>
-
-              <% end %>
-
-              <%= link_to "View Details",
-                          product_path(product),
-                          class: "btn btn-success w-100 mt-3" %>
-
-              <%= button_to "Add to Cart",
-              add_cart_path(product),
-              method: :post,
-              class: "btn btn-outline-success w-100 mt-2" %>
-
-            </div>
-
-          </div>
-            <% if product.on_sale? %>
-              <span class="badge bg-danger mb-2">
-                On Sale
-              </span>
-            <% end %>
-
-            <% if product.created_at >= 5.days.ago %>
-              <span class="badge bg-success mb-2">
-                New
-              </span>
-            <% end %>
-        </div>
-
-      </div>
+      <%= render "product_card", product: product %>
 
     <% end %>
-
-  </div>
-
-  <div class="d-flex justify-content-center mt-5">
-
-    <%= paginate @products %>
 
   </div>
 
