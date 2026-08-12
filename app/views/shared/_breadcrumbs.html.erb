@@ -1,23 +1,21 @@
-<% breadcrumbs = [] %>
+<% breadcrumbs = [["Home", root_path]] %>
 
-<% breadcrumbs << ["Home", root_path] %>
+<% case controller_name %>
 
-<% if controller_name == "products" %>
+<% when "products" %>
 
   <% if action_name == "show" && @product.present? %>
 
-    <%
-      breadcrumbs << ["Products", products_path]
+    <% breadcrumbs << ["Products", products_path] %>
 
-      if @product.category.present?
-        breadcrumbs << [
-          @product.category.name,
-          category_products_path(@product.category)
-        ]
-      end
+    <% if @product.category.present? %>
+      <% breadcrumbs << [
+        @product.category.name,
+        category_products_path(@product.category)
+      ] %>
+    <% end %>
 
-      breadcrumbs << [@product.name, nil]
-    %>
+    <% breadcrumbs << [@product.name, nil] %>
 
   <% elsif action_name == "new_products" %>
 
@@ -33,7 +31,8 @@
 
   <% end %>
 
-<% elsif controller_name == "categories" %>
+
+<% when "categories" %>
 
   <% if action_name == "show" && @category.present? %>
 
@@ -46,7 +45,8 @@
 
   <% end %>
 
-<% elsif controller_name == "orders" %>
+
+<% when "orders" %>
 
   <% breadcrumbs << ["My Orders", orders_path] %>
 
@@ -54,15 +54,18 @@
     <% breadcrumbs << ["Order ##{@order.id}", nil] %>
   <% end %>
 
-<% elsif controller_name == "carts" %>
 
-  <% breadcrumbs << ["Shopping Cart", cart_path] %>
+<% when "carts" %>
 
-<% elsif controller_name == "checkouts" %>
+  <% breadcrumbs << ["Shopping Cart", nil] %>
 
-  <% breadcrumbs << ["Checkout", checkout_path] %>
+
+<% when "checkouts" %>
+
+  <% breadcrumbs << ["Checkout", nil] %>
 
 <% end %>
+
 
 <nav aria-label="breadcrumb" class="breadcrumb-wrapper">
 
