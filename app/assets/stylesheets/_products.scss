@@ -1,9 +1,12 @@
 .product-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin: $spacing / 2;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
   }
 
   .card-img-top {
@@ -16,7 +19,17 @@
     font-weight: 600;
   }
 
-  .text-decoration-line-through {
+  .sale-price {
+    font-weight: bold;
+  }
+
+  .original-price {
     font-size: 0.9rem;
+    color: #6c757d;
+    text-decoration: line-through;
+  }
+
+  .discount-badge {
+    font-size: 0.8rem;
   }
 }
