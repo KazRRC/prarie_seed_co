@@ -1,0 +1,19 @@
+<div class="container py-4">
+
+  <h1>On Sale</h1>
+
+  <p class="text-muted mb-4">
+    Save on selected Prairie Seed Co. products.
+  </p>
+
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+
+    <% @products.each do |product| %>
+
+      <%= render "product_card", product: product %>
+
+    <% end %>
+
+  </div>
+
+</div>
