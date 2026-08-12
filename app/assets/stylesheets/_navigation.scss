@@ -1,11 +1,31 @@
+.navbar {
+  background-color: $primary;
+
+  .navbar-brand {
+    font-weight: bold;
+  }
+
+  .nav-link {
+    color: white;
+
+    &:hover {
+      color: $secondary;
+    }
+  }
+
+  .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
 .breadcrumb-wrapper {
   margin-bottom: $spacing;
 
   .breadcrumb {
     margin-bottom: 0;
     padding: $spacing / 2;
-    background: $light;
-    border-radius: 0.5rem;
+    background-color: $light;
+    border-radius: $card-radius;
 
     .breadcrumb-item {
 
