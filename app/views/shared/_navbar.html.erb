@@ -1,24 +1,41 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-success">
   <div class="container">
 
-    <%= link_to "Prairie Seed Co.", root_path, class: "navbar-brand" %>
+    <%= link_to "🌱 Prairie Seed Co.", root_path, class: "navbar-brand fw-bold" %>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
+
       <span class="navbar-toggler-icon"></span>
+
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
+
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
         <li class="nav-item">
-          <%= link_to "Products", products_path, class: "nav-link" %>
+          <%= link_to "Products",
+                      products_path,
+                      class: "nav-link" %>
         </li>
+
         <li class="nav-item">
-          <%= link_to "Categories", categories_path, class: "nav-link" %>
+          <%= link_to "Categories",
+                      categories_path,
+                      class: "nav-link" %>
         </li>
+
         <li class="nav-item">
-  <%= link_to "New Products",
-              new_products_products_path,
-              class: "nav-link" %>
+          <%= link_to "New Products",
+                      new_products_products_path,
+                      class: "nav-link" %>
         </li>
 
         <li class="nav-item">
@@ -26,35 +43,68 @@
                       sale_products_path,
                       class: "nav-link" %>
         </li>
+
       </ul>
-      <% if customer_signed_in? %>
-<%= link_to cart_path, class: "nav-link" do %>
-  🛒 Cart (<%= session[:cart].values.sum %>)
-<% end %>
-<%= link_to "My Orders",
-            orders_path,
-            class: "nav-link" %>
-  <%= link_to "My Account", edit_customer_registration_path, class: "nav-link" %>
 
-  <%= button_to "Logout",
-      destroy_customer_session_path,
-      method: :delete,
-      class: "btn btn-outline-light ms-2" %>
-<%= form_with url: products_path,
-              method: :get,
-              local: true,
-              class: "d-flex mb-4" do |f| %>
+      <ul class="navbar-nav align-items-lg-center">
 
+        <% if customer_signed_in? %>
 
-<% end %>
-<% else %>
+          <li class="nav-item">
+            <%= link_to cart_path,
+                        class: "nav-link" do %>
+              🛒 Cart
+              (<%= session[:cart].values.sum %>)
+            <% end %>
+          </li>
 
-  <%= link_to "Register",
-      new_customer_registration_path,
-      class: "nav-link" %>
+          <li class="nav-item">
+            <%= link_to "My Orders",
+                        orders_path,
+                        class: "nav-link" %>
+          </li>
 
-  <%= link_to "Login",
-      new_customer_session_path,
-      class: "nav-link" %>
+          <li class="nav-item">
+            <%= link_to "My Account",
+                        edit_customer_registration_path,
+                        class: "nav-link" %>
+          </li>
 
-<% end %>
+          <% if current_customer.admin? %>
+
+            <li class="nav-item">
+              <%= link_to "Admin",
+                          admin_root_path,
+                          class: "nav-link fw-bold" %>
+            </li>
+
+          <% end %>
+
+          <li class="nav-item">
+            <%= button_to "Logout",
+                          destroy_customer_session_path,
+                          method: :delete,
+                          class: "btn btn-outline-light ms-lg-2 mt-2 mt-lg-0" %>
+          </li>
+
+        <% else %>
+
+          <li class="nav-item">
+            <%= link_to "Register",
+                        new_customer_registration_path,
+                        class: "nav-link" %>
+          </li>
+
+          <li class="nav-item">
+            <%= link_to "Login",
+                        new_customer_session_path,
+                        class: "nav-link" %>
+          </li>
+
+        <% end %>
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
