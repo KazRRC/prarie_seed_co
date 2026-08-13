@@ -1,111 +1,70 @@
-<div class="container py-5">
+<div class="container py-4">
 
-  <div class="row">
+  <div class="row g-4 align-items-start">
 
-    <div class="col-lg-6">
-      <% if @product.on_sale? %>
-        <span class="badge bg-danger fs-6 mb-3">
-          🏷️ Limited Time Sale!
-        </span>
-      <% end %>
+    <div class="col-12 col-md-6">
+
       <% if @product.image.attached? %>
 
         <%= image_tag @product.image,
-                      class: "img-fluid rounded shadow" %>
+                      class: "img-fluid rounded shadow",
+                      alt: @product.name %>
 
       <% else %>
 
         <%= image_tag "placeholder.png",
-                      class: "img-fluid rounded shadow" %>
+                      class: "img-fluid rounded shadow",
+                      alt: @product.name %>
 
       <% end %>
 
     </div>
 
-    <div class="col-lg-6">
+    <div class="col-12 col-md-6">
 
-
-
-      <h1 class="display-5 fw-bold">
+      <h1 class="fw-bold">
         <%= @product.name %>
       </h1>
 
-      <p class="lead">
+      <p>
         <%= @product.description %>
       </p>
 
-        <% if @product.on_sale? && @product.sale_price.present? %>
+      <% if @product.on_sale? && @product.sale_price.present? %>
 
-          <p class="mb-1">
-            <span class="text-muted text-decoration-line-through fs-4">
-              $<%= sprintf("%.2f", @product.price) %>
-            </span>
+        <div class="mb-3">
 
-          </p>
+          <span class="text-muted text-decoration-line-through">
+            $<%= number_with_precision(@product.price, precision: 2) %>
+          </span>
 
-          <h2 class="text-danger fw-bold">
+          <span class="fs-3 fw-bold text-danger ms-2">
+            $<%= number_with_precision(@product.sale_price, precision: 2) %>
+          </span>
 
-            $<%= sprintf("%.2f", @product.sale_price) %>
+          <span class="badge bg-danger">
+            <%= @product.discount_percentage %>% OFF
+          </span>
 
-            <span class="badge bg-danger ms-2">
-              <%= @product.discount_percentage %>% OFF
-            </span>
+        </div>
 
-          </h2>
+      <% else %>
 
-        <% else %>
+        <h3>
+          $<%= number_with_precision(@product.price, precision: 2) %>
+        </h3>
 
-          <h2 class="text-success fw-bold">
-            $<%= sprintf("%.2f", @product.price) %>
-          </h2>
+      <% end %>
 
-        <% end %>
+      <p>
+        <strong>Stock:</strong>
+        <%= @product.stock_quantity %>
+      </p>
 
-      <hr>
-
-      <table class="table">
-
-        <tr>
-          <th>Category</th>
-          <td><%= @product.category.name %></td>
-        </tr>
-
-        <tr>
-          <th>Stock</th>
-          <td><%= @product.stock_quantity %></td>
-        </tr>
-
-        <tr>
-          <th>Planting Depth</th>
-          <td><%= @product.planting_depth %></td>
-        </tr>
-
-        <tr>
-          <th>Row Spacing</th>
-          <td><%= @product.row_spacing %></td>
-        </tr>
-
-        <tr>
-          <th>Plant Spacing</th>
-          <td><%= @product.plant_spacing %></td>
-        </tr>
-
-        <tr>
-          <th>Sun Requirements</th>
-          <td><%= @product.sun_requirements.to_s.titleize %></td>
-        </tr>
-
-        <tr>
-          <th>Days to Germination</th>
-          <td><%= @product.days_to_germination %></td>
-        </tr>
-
-      </table>
-
-      <%= button_to "Add to Cart",
-                    add_cart_path(@product),
-                    method: :post,
-                    class: "btn btn-success btn-lg mt-3" %>
+      <p>
+        <strong>Category:</strong>
+        <%= @product.category.name %>
+      </p>
 
     </div>
 
