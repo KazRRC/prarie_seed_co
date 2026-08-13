@@ -1,5 +1,6 @@
 .product-card {
   margin: $spacing / 2;
+  height: 100%;
 
   transition:
     transform 0.2s ease,
@@ -31,5 +32,20 @@
 
   .discount-badge {
     font-size: 0.8rem;
+  }
+
+  @media (max-width: $mobile-breakpoint) {
+
+    .card-img-top {
+      height: 180px;
+    }
+
+    .card-body {
+      padding: 15px;
+    }
+
+    .card-title {
+      font-size: 1rem;
+    }
   }
 }
